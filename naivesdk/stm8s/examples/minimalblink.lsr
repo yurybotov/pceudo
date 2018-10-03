@@ -1,0 +1,935 @@
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 1  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+   1                         stm8      
+   2                                   segment  at 0-FF 'reg'
+   3                                   segment  at 100-17FF 'ram'
+   4                                   segment  at 4000-45FF 'eeprom'
+   5                                   segment  at 8000-FFFF 'flash'
+   6                                   segment  at 10000-17FFF 'hiflash'
+   7                                   segment  at 0-FFFF 'unify'
+   8                         
+   9                         unify     segment  byte at: 5000  'unify'
+  10                         gpioaodr:  
+  11  005000                                 ds.b     
+  12                         gpioaidr:  
+  13  005001                                 ds.b     
+  14                         gpioaddr:  
+  15  005002                                 ds.b     
+  16                         gpioacr1:  
+  17  005003                                 ds.b     
+  18                         gpioacr2:  
+  19  005004                                 ds.b     
+  20                         gpiobodr:  
+  21  005005                                 ds.b     
+  22                         gpiobidr:  
+  23  005006                                 ds.b     
+  24                         gpiobddr:  
+  25  005007                                 ds.b     
+  26                         gpiobcr1:  
+  27  005008                                 ds.b     
+  28                         gpiobcr2:  
+  29  005009                                 ds.b     
+  30                         gpiocodr:  
+  31  00500A                                 ds.b     
+  32                         gpiocidr:  
+  33  00500B                                 ds.b     
+  34                         gpiocddr:  
+  35  00500C                                 ds.b     
+  36                         gpioccr1:  
+  37  00500D                                 ds.b     
+  38                         gpioccr2:  
+  39  00500E                                 ds.b     
+  40                         gpiododr:  
+  41  00500F                                 ds.b     
+  42                         gpiodidr:  
+  43  005010                                 ds.b     
+  44                         gpiodddr:  
+  45  005011                                 ds.b     
+  46                         gpiodcr1:  
+  47  005012                                 ds.b     
+  48                         gpiodcr2:  
+  49  005013                                 ds.b     
+  50                         gpioeodr:  
+  51  005014                                 ds.b     
+  52                         gpioeidr:  
+  53  005015                                 ds.b     
+  54                         gpioeddr:  
+  55  005016                                 ds.b     
+  56                         gpioecr1:  
+  57  005017                                 ds.b     
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 2  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+  58                         gpioecr2:  
+  59  005018                                 ds.b     
+  60                         gpiofodr:  
+  61  005019                                 ds.b     
+  62                         gpiofidr:  
+  63  00501A                                 ds.b     
+  64                         gpiofddr:  
+  65  00501B                                 ds.b     
+  66                         gpiofcr1:  
+  67  00501C                                 ds.b     
+  68                         gpiofcr2:  
+  69  00501D                                 ds.b     
+  70                         gpiogodr:  
+  71  00501E                                 ds.b     
+  72                         gpiogidr:  
+  73  00501F                                 ds.b     
+  74                         gpiogddr:  
+  75  005020                                 ds.b     
+  76                         gpiogcr1:  
+  77  005021                                 ds.b     
+  78                         gpiogcr2:  
+  79  005022                                 ds.b     
+  80                         gpiohodr:  
+  81  005023                                 ds.b     
+  82                         gpiohidr:  
+  83  005024                                 ds.b     
+  84                         gpiohddr:  
+  85  005025                                 ds.b     
+  86                         gpiohcr1:  
+  87  005026                                 ds.b     
+  88                         gpiohcr2:  
+  89  005027                                 ds.b     
+  90                         gpioiodr:  
+  91  005028                                 ds.b     
+  92                         gpioiidr:  
+  93  005029                                 ds.b     
+  94                         gpioiddr:  
+  95  00502A                                 ds.b     
+  96                         gpioicr1:  
+  97  00502B                                 ds.b     
+  98                         gpioicr2:  
+  99  00502C                                 ds.b     
+ 100                         unify     segment  byte at: 505A  'unify'
+ 101                         flashcr1:  
+ 102  00505A                                 ds.b     
+ 103                         flashcr2:  
+ 104  00505B                                 ds.b     
+ 105                         flashncr2:  
+ 106  00505C                                 ds.b     
+ 107                         flashfpr:  
+ 108  00505D                                 ds.b     
+ 109                         flashnfpr:  
+ 110  00505E                                 ds.b     
+ 111                         flashiapsr:  
+ 112  00505F                                 ds.b     
+ 113                         unify     segment  byte at: 5062  'unify'
+ 114                         flashpukr:  
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 3  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+ 115  005062                                 ds.b     
+ 116                         unify     segment  byte at: 5064  'unify'
+ 117                         flashdukr:  
+ 118  005064                                 ds.b     
+ 119                         unify     segment  byte at: 50A0  'unify'
+ 120                         itcexticr1:  
+ 121  0050A0                                 ds.b     
+ 122                         itcexticr2:  
+ 123  0050A1                                 ds.b     
+ 124                         unify     segment  byte at: 50B3  'unify'
+ 125                         rstsr:    
+ 126  0050B3                                 ds.b     
+ 127                         unify     segment  byte at: 50C0  'unify'
+ 128                         clkickr:  
+ 129  0050C0                                 ds.b     
+ 130                         clkeckr:  
+ 131  0050C1                                 ds.b     
+ 132                         unify     segment  byte at: 50C3  'unify'
+ 133                         clkcmsr:  
+ 134  0050C3                                 ds.b     
+ 135                         clkswr:   
+ 136  0050C4                                 ds.b     
+ 137                         clkswcr:  
+ 138  0050C5                                 ds.b     
+ 139                         clkckdivr:  
+ 140  0050C6                                 ds.b     
+ 141                         clkpckenr1:  
+ 142  0050C7                                 ds.b     
+ 143                         clkcssr:  
+ 144  0050C8                                 ds.b     
+ 145                         clkccor:  
+ 146  0050C9                                 ds.b     
+ 147                         clkpckenr2:  
+ 148  0050CA                                 ds.b     
+ 149                         clkcanccr:  
+ 150  0050CB                                 ds.b     
+ 151                         clkhsitrimr:  
+ 152  0050CC                                 ds.b     
+ 153                         clkswimccr:  
+ 154  0050CD                                 ds.b     
+ 155                         unify     segment  byte at: 50D1  'unify'
+ 156                         wwdgcr:   
+ 157  0050D1                                 ds.b     
+ 158                         wwdgwr:   
+ 159  0050D2                                 ds.b     
+ 160                         unify     segment  byte at: 50E0  'unify'
+ 161                         iwdgkr:   
+ 162  0050E0                                 ds.b     
+ 163                         iwdgpr:   
+ 164  0050E1                                 ds.b     
+ 165                         iwdgrlr:  
+ 166  0050E2                                 ds.b     
+ 167                         unify     segment  byte at: 50F0  'unify'
+ 168                         awucsr1:  
+ 169  0050F0                                 ds.b     
+ 170                         awuapr:   
+ 171  0050F1                                 ds.b     
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 4  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+ 172                         awutbr:   
+ 173  0050F2                                 ds.b     
+ 174                         beepcsr:  
+ 175  0050F3                                 ds.b     
+ 176                         unify     segment  byte at: 5200  'unify'
+ 177                         spicr1:   
+ 178  005200                                 ds.b     
+ 179                         spicr2:   
+ 180  005201                                 ds.b     
+ 181                         spiicr:   
+ 182  005202                                 ds.b     
+ 183                         spisr:    
+ 184  005203                                 ds.b     
+ 185                         spidr:    
+ 186  005204                                 ds.b     
+ 187                         spicrcpr:  
+ 188  005205                                 ds.b     
+ 189                         spirxcrcr:  
+ 190  005206                                 ds.b     
+ 191                         spitxcrcr:  
+ 192  005207                                 ds.b     
+ 193                         unify     segment  byte at: 5210  'unify'
+ 194                         i2ccr1:   
+ 195  005210                                 ds.b     
+ 196                         i2ccr2:   
+ 197  005211                                 ds.b     
+ 198                         i2cfreqr:  
+ 199  005212                                 ds.b     
+ 200                         i2coarl:  
+ 201  005213                                 ds.b     
+ 202                         i2coarh:  
+ 203  005214                                 ds.b     
+ 204                         unify     segment  byte at: 5216  'unify'
+ 205                         i2cdr:    
+ 206  005216                                 ds.b     
+ 207                         i2csr1:   
+ 208  005217                                 ds.b     
+ 209                         i2csr2:   
+ 210  005218                                 ds.b     
+ 211                         i2csr3:   
+ 212  005219                                 ds.b     
+ 213                         i2citr:   
+ 214  00521A                                 ds.b     
+ 215                         i2cccrl:  
+ 216  00521B                                 ds.b     
+ 217                         i2cccrh:  
+ 218  00521C                                 ds.b     
+ 219                         i2ctriser:  
+ 220  00521D                                 ds.b     
+ 221                         unify     segment  byte at: 5230  'unify'
+ 222                         uart1sr:  
+ 223  005230                                 ds.b     
+ 224                         uart1dr:  
+ 225  005231                                 ds.b     
+ 226                         uart1brr1:  
+ 227  005232                                 ds.b     
+ 228                         uart1brr2:  
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 5  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+ 229  005233                                 ds.b     
+ 230                         uart1cr1:  
+ 231  005234                                 ds.b     
+ 232                         uart1cr2:  
+ 233  005235                                 ds.b     
+ 234                         uart1cr3:  
+ 235  005236                                 ds.b     
+ 236                         uart1cr4:  
+ 237  005237                                 ds.b     
+ 238                         uart1cr5:  
+ 239  005238                                 ds.b     
+ 240                         uart1gtr:  
+ 241  005239                                 ds.b     
+ 242                         uart1pstr:  
+ 243  00523A                                 ds.b     
+ 244                         unify     segment  byte at: 5240  'unify'
+ 245                         uart3sr:  
+ 246  005240                                 ds.b     
+ 247                         uart3dr:  
+ 248  005241                                 ds.b     
+ 249                         uart3brr1:  
+ 250  005242                                 ds.b     
+ 251                         uart3brr2:  
+ 252  005243                                 ds.b     
+ 253                         uart3cr1:  
+ 254  005244                                 ds.b     
+ 255                         uart3cr2:  
+ 256  005245                                 ds.b     
+ 257                         uart3cr3:  
+ 258  005246                                 ds.b     
+ 259                         uart3cr4:  
+ 260  005247                                 ds.b     
+ 261                         unify     segment  byte at: 5249  'unify'
+ 262                         uart3cr6:  
+ 263  005249                                 ds.b     
+ 264                         unify     segment  byte at: 5250  'unify'
+ 265                         tim1cr1:  
+ 266  005250                                 ds.b     
+ 267                         tim1cr2:  
+ 268  005251                                 ds.b     
+ 269                         tim1smcr:  
+ 270  005252                                 ds.b     
+ 271                         tim1etr:  
+ 272  005253                                 ds.b     
+ 273                         tim1ier:  
+ 274  005254                                 ds.b     
+ 275                         tim1sr1:  
+ 276  005255                                 ds.b     
+ 277                         tim1sr2:  
+ 278  005256                                 ds.b     
+ 279                         tim1egr:  
+ 280  005257                                 ds.b     
+ 281                         tim1ccmr1:  
+ 282  005258                                 ds.b     
+ 283                         tim1ccmr2:  
+ 284  005259                                 ds.b     
+ 285                         tim1ccmr3:  
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 6  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+ 286  00525A                                 ds.b     
+ 287                         tim1ccmr4:  
+ 288  00525B                                 ds.b     
+ 289                         tim1ccer1:  
+ 290  00525C                                 ds.b     
+ 291                         tim1ccer2:  
+ 292  00525D                                 ds.b     
+ 293                         tim1cntrh:  
+ 294  00525E                                 ds.b     
+ 295                         tim1cntrl:  
+ 296  00525F                                 ds.b     
+ 297                         tim1pscrh:  
+ 298  005260                                 ds.b     
+ 299                         tim1pscrl:  
+ 300  005261                                 ds.b     
+ 301                         tim1arrh:  
+ 302  005262                                 ds.b     
+ 303                         tim1arrl:  
+ 304  005263                                 ds.b     
+ 305                         tim1rcr:  
+ 306  005264                                 ds.b     
+ 307                         tim1ccr1h:  
+ 308  005265                                 ds.b     
+ 309                         tim1ccr1l:  
+ 310  005266                                 ds.b     
+ 311                         tim1ccr2h:  
+ 312  005267                                 ds.b     
+ 313                         tim1ccr2l:  
+ 314  005268                                 ds.b     
+ 315                         tim1ccr3h:  
+ 316  005269                                 ds.b     
+ 317                         tim1ccr3l:  
+ 318  00526A                                 ds.b     
+ 319                         tim1ccr4h:  
+ 320  00526B                                 ds.b     
+ 321                         tim1ccr4l:  
+ 322  00526C                                 ds.b     
+ 323                         tim1bkr:  
+ 324  00526D                                 ds.b     
+ 325                         tim1dtr:  
+ 326  00526E                                 ds.b     
+ 327                         tim1oisr:  
+ 328  00526F                                 ds.b     
+ 329                         unify     segment  byte at: 5300  'unify'
+ 330                         tim2cr1:  
+ 331  005300                                 ds.b     
+ 332                         tim2ier:  
+ 333  005301                                 ds.b     
+ 334                         tim2sr1:  
+ 335  005302                                 ds.b     
+ 336                         tim2sr2:  
+ 337  005303                                 ds.b     
+ 338                         tim2egr:  
+ 339  005304                                 ds.b     
+ 340                         tim2ccmr1:  
+ 341  005305                                 ds.b     
+ 342                         tim2ccmr2:  
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 7  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+ 343  005306                                 ds.b     
+ 344                         tim2ccmr3:  
+ 345  005307                                 ds.b     
+ 346                         tim2ccer1:  
+ 347  005308                                 ds.b     
+ 348                         tim2ccer2:  
+ 349  005309                                 ds.b     
+ 350                         tim2cntrh:  
+ 351  00530A                                 ds.b     
+ 352                         tim2cntrl:  
+ 353  00530B                                 ds.b     
+ 354                         tim2pscr:  
+ 355  00530C                                 ds.b     
+ 356                         tim2arrh:  
+ 357  00530D                                 ds.b     
+ 358                         tim2arrl:  
+ 359  00530E                                 ds.b     
+ 360                         tim2ccr1h:  
+ 361  00530F                                 ds.b     
+ 362                         tim2ccr1l:  
+ 363  005310                                 ds.b     
+ 364                         tim2ccr2h:  
+ 365  005311                                 ds.b     
+ 366                         tim2ccr2l:  
+ 367  005312                                 ds.b     
+ 368                         tim2ccr3h:  
+ 369  005313                                 ds.b     
+ 370                         tim2ccr3l:  
+ 371  005314                                 ds.b     
+ 372                         unify     segment  byte at: 5320  'unify'
+ 373                         tim3cr1:  
+ 374  005320                                 ds.b     
+ 375                         tim3ier:  
+ 376  005321                                 ds.b     
+ 377                         tim3sr1:  
+ 378  005322                                 ds.b     
+ 379                         tim3sr2:  
+ 380  005323                                 ds.b     
+ 381                         tim3egr:  
+ 382  005324                                 ds.b     
+ 383                         tim3ccmr1:  
+ 384  005325                                 ds.b     
+ 385                         tim3ccmr2:  
+ 386  005326                                 ds.b     
+ 387                         tim3ccer1:  
+ 388  005327                                 ds.b     
+ 389                         tim3cntrh:  
+ 390  005328                                 ds.b     
+ 391                         tim3cntrl:  
+ 392  005329                                 ds.b     
+ 393                         tim3pscr:  
+ 394  00532A                                 ds.b     
+ 395                         tim3arrh:  
+ 396  00532B                                 ds.b     
+ 397                         tim3arrl:  
+ 398  00532C                                 ds.b     
+ 399                         tim3ccr1h:  
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 8  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+ 400  00532D                                 ds.b     
+ 401                         tim3ccr1l:  
+ 402  00532E                                 ds.b     
+ 403                         tim3ccr2h:  
+ 404  00532F                                 ds.b     
+ 405                         tim3ccr2l:  
+ 406  005330                                 ds.b     
+ 407                         unify     segment  byte at: 5340  'unify'
+ 408                         tim4cr1:  
+ 409  005340                                 ds.b     
+ 410                         tim4ier:  
+ 411  005341                                 ds.b     
+ 412                         tim4sr:   
+ 413  005342                                 ds.b     
+ 414                         tim4egr:  
+ 415  005343                                 ds.b     
+ 416                         tim4cntr:  
+ 417  005344                                 ds.b     
+ 418                         tim4pscr:  
+ 419  005345                                 ds.b     
+ 420                         tim4arr:  
+ 421  005346                                 ds.b     
+ 422                         unify     segment  byte at: 5400  'unify'
+ 423                         adccsr:   
+ 424  005400                                 ds.b     
+ 425                         adccr1:   
+ 426  005401                                 ds.b     
+ 427                         adccr2:   
+ 428  005402                                 ds.b     
+ 429                         adccr3:   
+ 430  005403                                 ds.b     
+ 431                         adcdrh:   
+ 432  005404                                 ds.b     
+ 433                         adcdrl:   
+ 434  005405                                 ds.b     
+ 435                         adctdrh:  
+ 436  005406                                 ds.b     
+ 437                         adctdrl:  
+ 438  005407                                 ds.b     
+ 439                         unify     segment  byte at: 48CD  'unify'
+ 440                         unicidx:  
+ 441  0048CD                                 ds.w     
+ 442                         unicidy:  
+ 443  0048CF                                 ds.w     
+ 444                         unicidwafer:  
+ 445  0048D1                                 ds.b     
+ 446                         unicidlot0:  
+ 447  0048D2                                 ds.b     
+ 448                         unicidlot1:  
+ 449  0048D3                                 ds.b     
+ 450                         unicidlot2:  
+ 451  0048D4                                 ds.b     
+ 452                         unicidlot3:  
+ 453  0048D5                                 ds.b     
+ 454                         unicidlot4:  
+ 455  0048D6                                 ds.b     
+ 456                         unicidlot5:  
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 9  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+ 457  0048D7                                 ds.b     
+ 458                         unicidlot6:  
+ 459  0048D8                                 ds.b     
+ 460                         unify     segment  byte at: 4800  'unify'
+ 461                         optionopt0:  
+ 462  004800                                 ds.b     
+ 463                         optionopt1:  
+ 464  004801                                 ds.b     
+ 465                         optionnopt1:  
+ 466  004802                                 ds.b     
+ 467                         optionopt2:  
+ 468  004803                                 ds.b     
+ 469                         optionnopt2:  
+ 470  004804                                 ds.b     
+ 471                         optionopt3:  
+ 472  004805                                 ds.b     
+ 473                         optionnopt3:  
+ 474  004806                                 ds.b     
+ 475                         optionopt4:  
+ 476  004807                                 ds.b     
+ 477                         optionnopt4:  
+ 478  004808                                 ds.b     
+ 479                         optionopt5:  
+ 480  004809                                 ds.b     
+ 481                         optionnopt5:  
+ 482  00480A                                 ds.b     
+ 483                         optionopt6:  
+ 484  00480B                                 ds.b     
+ 485                         optionnopt6:  
+ 486  00480C                                 ds.b     
+ 487                         optionopt7:  
+ 488  00480D                                 ds.b     
+ 489                         optionnopt7:  
+ 490  00480E                                 ds.b     
+ 491                         unify     segment  byte at: 487E  'unify'
+ 492                         bootloaderoptbl:  
+ 493  00487E                                 ds.b     
+ 494                         bootloadernoptbl:  
+ 495  00487F                                 ds.b     
+ 496                         unify     segment  byte at: 7F00  'unify'
+ 497                         cpua:     
+ 498  007F00                                 ds.b     
+ 499                         cpupce:   
+ 500  007F01                                 ds.b     
+ 501                         cpupch:   
+ 502  007F02                                 ds.b     
+ 503                         cpupcl:   
+ 504  007F03                                 ds.b     
+ 505                         cpuxh:    
+ 506  007F04                                 ds.b     
+ 507                         cpuxl:    
+ 508  007F05                                 ds.b     
+ 509                         cpuyh:    
+ 510  007F06                                 ds.b     
+ 511                         cpuyl:    
+ 512  007F07                                 ds.b     
+ 513                         cpusph:   
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 10  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+ 514  007F08                                 ds.b     
+ 515                         cpuspl:   
+ 516  007F09                                 ds.b     
+ 517                         cpuccr:   
+ 518  007F0A                                 ds.b     
+ 519                         unify     segment  byte at: 7F60  'unify'
+ 520                         cpugcr:   
+ 521  007F60                                 ds.b     
+ 522                         unify     segment  byte at: 7F70  'unify'
+ 523                         itcspr1:  
+ 524  007F70                                 ds.b     
+ 525                         itcspr2:  
+ 526  007F71                                 ds.b     
+ 527                         itcspr3:  
+ 528  007F72                                 ds.b     
+ 529                         itcspr4:  
+ 530  007F73                                 ds.b     
+ 531                         itcspr5:  
+ 532  007F74                                 ds.b     
+ 533                         itcspr6:  
+ 534  007F75                                 ds.b     
+ 535                         itcspr7:  
+ 536  007F76                                 ds.b     
+ 537                         itcspr8:  
+ 538  007F77                                 ds.b     
+ 539                         unify     segment  byte at: 7F80  'unify'
+ 540                         swimcsr:  
+ 541  007F80                                 ds.b     
+ 542                         unify     segment  byte at: 7F90  'unify'
+ 543                         dmbk1re:  
+ 544  007F90                                 ds.b     
+ 545                         dmbk1rh:  
+ 546  007F91                                 ds.b     
+ 547                         dmbk1rl:  
+ 548  007F92                                 ds.b     
+ 549                         dmbk2re:  
+ 550  007F93                                 ds.b     
+ 551                         dmbk2rh:  
+ 552  007F94                                 ds.b     
+ 553                         dmbk2rl:  
+ 554  007F95                                 ds.b     
+ 555                         dmcr1:    
+ 556  007F96                                 ds.b     
+ 557                         dmcr2:    
+ 558  007F97                                 ds.b     
+ 559                         dmcsr1:   
+ 560  007F98                                 ds.b     
+ 561                         dmcsr2:   
+ 562  007F99                                 ds.b     
+ 563                         dmenfctr:  
+ 564  007F9A                                 ds.b     
+ 565                         flash     segment  byte at: 8000  'flash'
+ 566                         interruptreset:  
+ 567  008000   8200800B                      dc.l     {$82000000+start}
+ 568                         delay:    
+ 569  008004   AEFDE8                        ldw      x,#65000
+ 570                         dloop:    
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 11  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+ 571  008007   5A                            decw     x
+ 572  008008   26FD                          jrne     dloop
+ 573  00800A   81                            ret      
+ 574                         start:    
+ 575  00800B   AE17FF                        ldw      x,#$17ff
+ 576  00800E   94                            ldw      sp,x
+ 577  00800F   721A5011                      bset     gpiodddr,#5
+ 578  008013   721A5012                      bset     gpiodcr1,#5
+ 579                         loop:     
+ 580  008017   CD8004                        call     delay
+ 581  00801A   901A500F                      bcpl     gpiododr,#5
+ 582  00801E   20F7                          jra      loop
+ 583                         
+ 584  008020                                 END      
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 12  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+Symbol Name                       Value     Call       Type  Scope      Rel.  Line  Privacy  Segment   Size  Bytes File
+
+awucsr1                               50F0         no  WORD  Internal   ABS    168  private  bss          1     1  -
+awuapr                                50F1         no  WORD  Internal   ABS    170  private  bss          1     1  -
+awutbr                                50F2         no  WORD  Internal   ABS    172  private  bss          1     1  -
+adccsr                                5400         no  WORD  Internal   ABS    423  private  bss          1     1  -
+adccr1                                5401         no  WORD  Internal   ABS    425  private  bss          1     1  -
+adccr2                                5402         no  WORD  Internal   ABS    427  private  bss          1     1  -
+adccr3                                5403         no  WORD  Internal   ABS    429  private  bss          1     1  -
+adcdrh                                5404         no  WORD  Internal   ABS    431  private  bss          1     1  -
+adcdrl                                5405         no  WORD  Internal   ABS    433  private  bss          1     1  -
+adctdrh                               5406         no  WORD  Internal   ABS    435  private  bss          1     1  -
+adctdrl                               5407         no  WORD  Internal   ABS    437  private  bss          1     1  -
+
+beepcsr                               50F3         no  WORD  Internal   ABS    174  private  bss          1     1  -
+bootloaderoptbl                       487E         no  WORD  Internal   ABS    492  private  bss          1     1  -
+bootloadernoptbl                      487F         no  WORD  Internal   ABS    494  private  bss          1     1  -
+
+clkickr                               50C0         no  WORD  Internal   ABS    128  private  bss          1     1  -
+clkeckr                               50C1         no  WORD  Internal   ABS    130  private  bss          1     1  -
+clkcmsr                               50C3         no  WORD  Internal   ABS    133  private  bss          1     1  -
+clkswr                                50C4         no  WORD  Internal   ABS    135  private  bss          1     1  -
+clkswcr                               50C5         no  WORD  Internal   ABS    137  private  bss          1     1  -
+clkckdivr                             50C6         no  WORD  Internal   ABS    139  private  bss          1     1  -
+clkpckenr1                            50C7         no  WORD  Internal   ABS    141  private  bss          1     1  -
+clkcssr                               50C8         no  WORD  Internal   ABS    143  private  bss          1     1  -
+clkccor                               50C9         no  WORD  Internal   ABS    145  private  bss          1     1  -
+clkpckenr2                            50CA         no  WORD  Internal   ABS    147  private  bss          1     1  -
+clkcanccr                             50CB         no  WORD  Internal   ABS    149  private  bss          1     1  -
+clkhsitrimr                           50CC         no  WORD  Internal   ABS    151  private  bss          1     1  -
+clkswimccr                            50CD         no  WORD  Internal   ABS    153  private  bss          1     1  -
+cpua                                  7F00         no  WORD  Internal   ABS    497  private  bss          1     1  -
+cpupce                                7F01         no  WORD  Internal   ABS    499  private  bss          1     1  -
+cpupch                                7F02         no  WORD  Internal   ABS    501  private  bss          1     1  -
+cpupcl                                7F03         no  WORD  Internal   ABS    503  private  bss          1     1  -
+cpuxh                                 7F04         no  WORD  Internal   ABS    505  private  bss          1     1  -
+cpuxl                                 7F05         no  WORD  Internal   ABS    507  private  bss          1     1  -
+cpuyh                                 7F06         no  WORD  Internal   ABS    509  private  bss          1     1  -
+cpuyl                                 7F07         no  WORD  Internal   ABS    511  private  bss          1     1  -
+cpusph                                7F08         no  WORD  Internal   ABS    513  private  bss          1     1  -
+cpuspl                                7F09         no  WORD  Internal   ABS    515  private  bss          1     1  -
+cpuccr                                7F0A         no  WORD  Internal   ABS    517  private  bss          1     1  -
+cpugcr                                7F60         no  WORD  Internal   ABS    520  private  bss          1     1  -
+
+dmbk1re                               7F90         no  WORD  Internal   ABS    543  private  bss          1     1  -
+dmbk1rh                               7F91         no  WORD  Internal   ABS    545  private  bss          1     1  -
+dmbk1rl                               7F92         no  WORD  Internal   ABS    547  private  bss          1     1  -
+dmbk2re                               7F93         no  WORD  Internal   ABS    549  private  bss          1     1  -
+dmbk2rh                               7F94         no  WORD  Internal   ABS    551  private  bss          1     1  -
+dmbk2rl                               7F95         no  WORD  Internal   ABS    553  private  bss          1     1  -
+dmcr1                                 7F96         no  WORD  Internal   ABS    555  private  bss          1     1  -
+dmcr2                                 7F97         no  WORD  Internal   ABS    557  private  bss          1     1  -
+dmcsr1                                7F98         no  WORD  Internal   ABS    559  private  bss          1     1  -
+dmcsr2                                7F99         no  WORD  Internal   ABS    561  private  bss          1     1  -
+dmenfctr                              7F9A         no  WORD  Internal   ABS    563  private  bss          1     1  -
+delay                                 8004         no  WORD  Internal   ABS    568  private  textdata     3     0  -
+dloop                                 8007         no  WORD  Internal   ABS    570  private  textdata     4     0  -
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 13  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+
+flashcr1                              505A         no  WORD  Internal   ABS    101  private  bss          1     1  -
+flashcr2                              505B         no  WORD  Internal   ABS    103  private  bss          1     1  -
+flashncr2                             505C         no  WORD  Internal   ABS    105  private  bss          1     1  -
+flashfpr                              505D         no  WORD  Internal   ABS    107  private  bss          1     1  -
+flashnfpr                             505E         no  WORD  Internal   ABS    109  private  bss          1     1  -
+flashiapsr                            505F         no  WORD  Internal   ABS    111  private  bss          1     1  -
+flashpukr                             5062         no  WORD  Internal   ABS    114  private  bss          1     1  -
+flashdukr                             5064         no  WORD  Internal   ABS    117  private  bss          1     1  -
+
+gpioaodr                              5000         no  WORD  Internal   ABS     10  private  bss          1     1  -
+gpioaidr                              5001         no  WORD  Internal   ABS     12  private  bss          1     1  -
+gpioaddr                              5002         no  WORD  Internal   ABS     14  private  bss          1     1  -
+gpioacr1                              5003         no  WORD  Internal   ABS     16  private  bss          1     1  -
+gpioacr2                              5004         no  WORD  Internal   ABS     18  private  bss          1     1  -
+gpiobodr                              5005         no  WORD  Internal   ABS     20  private  bss          1     1  -
+gpiobidr                              5006         no  WORD  Internal   ABS     22  private  bss          1     1  -
+gpiobddr                              5007         no  WORD  Internal   ABS     24  private  bss          1     1  -
+gpiobcr1                              5008         no  WORD  Internal   ABS     26  private  bss          1     1  -
+gpiobcr2                              5009         no  WORD  Internal   ABS     28  private  bss          1     1  -
+gpiocodr                              500A         no  WORD  Internal   ABS     30  private  bss          1     1  -
+gpiocidr                              500B         no  WORD  Internal   ABS     32  private  bss          1     1  -
+gpiocddr                              500C         no  WORD  Internal   ABS     34  private  bss          1     1  -
+gpioccr1                              500D         no  WORD  Internal   ABS     36  private  bss          1     1  -
+gpioccr2                              500E         no  WORD  Internal   ABS     38  private  bss          1     1  -
+gpiododr                              500F         no  WORD  Internal   ABS     40  private  bss          1     1  -
+gpiodidr                              5010         no  WORD  Internal   ABS     42  private  bss          1     1  -
+gpiodddr                              5011         no  WORD  Internal   ABS     44  private  bss          1     1  -
+gpiodcr1                              5012         no  WORD  Internal   ABS     46  private  bss          1     1  -
+gpiodcr2                              5013         no  WORD  Internal   ABS     48  private  bss          1     1  -
+gpioeodr                              5014         no  WORD  Internal   ABS     50  private  bss          1     1  -
+gpioeidr                              5015         no  WORD  Internal   ABS     52  private  bss          1     1  -
+gpioeddr                              5016         no  WORD  Internal   ABS     54  private  bss          1     1  -
+gpioecr1                              5017         no  WORD  Internal   ABS     56  private  bss          1     1  -
+gpioecr2                              5018         no  WORD  Internal   ABS     58  private  bss          1     1  -
+gpiofodr                              5019         no  WORD  Internal   ABS     60  private  bss          1     1  -
+gpiofidr                              501A         no  WORD  Internal   ABS     62  private  bss          1     1  -
+gpiofddr                              501B         no  WORD  Internal   ABS     64  private  bss          1     1  -
+gpiofcr1                              501C         no  WORD  Internal   ABS     66  private  bss          1     1  -
+gpiofcr2                              501D         no  WORD  Internal   ABS     68  private  bss          1     1  -
+gpiogodr                              501E         no  WORD  Internal   ABS     70  private  bss          1     1  -
+gpiogidr                              501F         no  WORD  Internal   ABS     72  private  bss          1     1  -
+gpiogddr                              5020         no  WORD  Internal   ABS     74  private  bss          1     1  -
+gpiogcr1                              5021         no  WORD  Internal   ABS     76  private  bss          1     1  -
+gpiogcr2                              5022         no  WORD  Internal   ABS     78  private  bss          1     1  -
+gpiohodr                              5023         no  WORD  Internal   ABS     80  private  bss          1     1  -
+gpiohidr                              5024         no  WORD  Internal   ABS     82  private  bss          1     1  -
+gpiohddr                              5025         no  WORD  Internal   ABS     84  private  bss          1     1  -
+gpiohcr1                              5026         no  WORD  Internal   ABS     86  private  bss          1     1  -
+gpiohcr2                              5027         no  WORD  Internal   ABS     88  private  bss          1     1  -
+gpioiodr                              5028         no  WORD  Internal   ABS     90  private  bss          1     1  -
+gpioiidr                              5029         no  WORD  Internal   ABS     92  private  bss          1     1  -
+gpioiddr                              502A         no  WORD  Internal   ABS     94  private  bss          1     1  -
+gpioicr1                              502B         no  WORD  Internal   ABS     96  private  bss          1     1  -
+gpioicr2                              502C         no  WORD  Internal   ABS     98  private  bss          1     1  -
+
+itcexticr1                            50A0         no  WORD  Internal   ABS    120  private  bss          1     1  -
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 14  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+itcexticr2                            50A1         no  WORD  Internal   ABS    122  private  bss          1     1  -
+iwdgkr                                50E0         no  WORD  Internal   ABS    161  private  bss          1     1  -
+iwdgpr                                50E1         no  WORD  Internal   ABS    163  private  bss          1     1  -
+iwdgrlr                               50E2         no  WORD  Internal   ABS    165  private  bss          1     1  -
+i2ccr1                                5210         no  WORD  Internal   ABS    194  private  bss          1     1  -
+i2ccr2                                5211         no  WORD  Internal   ABS    196  private  bss          1     1  -
+i2cfreqr                              5212         no  WORD  Internal   ABS    198  private  bss          1     1  -
+i2coarl                               5213         no  WORD  Internal   ABS    200  private  bss          1     1  -
+i2coarh                               5214         no  WORD  Internal   ABS    202  private  bss          1     1  -
+i2cdr                                 5216         no  WORD  Internal   ABS    205  private  bss          1     1  -
+i2csr1                                5217         no  WORD  Internal   ABS    207  private  bss          1     1  -
+i2csr2                                5218         no  WORD  Internal   ABS    209  private  bss          1     1  -
+i2csr3                                5219         no  WORD  Internal   ABS    211  private  bss          1     1  -
+i2citr                                521A         no  WORD  Internal   ABS    213  private  bss          1     1  -
+i2cccrl                               521B         no  WORD  Internal   ABS    215  private  bss          1     1  -
+i2cccrh                               521C         no  WORD  Internal   ABS    217  private  bss          1     1  -
+i2ctriser                             521D         no  WORD  Internal   ABS    219  private  bss          1     1  -
+itcspr1                               7F70         no  WORD  Internal   ABS    523  private  bss          1     1  -
+itcspr2                               7F71         no  WORD  Internal   ABS    525  private  bss          1     1  -
+itcspr3                               7F72         no  WORD  Internal   ABS    527  private  bss          1     1  -
+itcspr4                               7F73         no  WORD  Internal   ABS    529  private  bss          1     1  -
+itcspr5                               7F74         no  WORD  Internal   ABS    531  private  bss          1     1  -
+itcspr6                               7F75         no  WORD  Internal   ABS    533  private  bss          1     1  -
+itcspr7                               7F76         no  WORD  Internal   ABS    535  private  bss          1     1  -
+itcspr8                               7F77         no  WORD  Internal   ABS    537  private  bss          1     1  -
+interruptreset                        8000         no  WORD  Internal   ABS    566  private  textdata     4     4  -
+
+loop                                  8017         no  WORD  Internal   ABS    579  private  textdata     9     0  -
+
+optionopt0                            4800         no  WORD  Internal   ABS    461  private  bss          1     1  -
+optionopt1                            4801         no  WORD  Internal   ABS    463  private  bss          1     1  -
+optionnopt1                           4802         no  WORD  Internal   ABS    465  private  bss          1     1  -
+optionopt2                            4803         no  WORD  Internal   ABS    467  private  bss          1     1  -
+optionnopt2                           4804         no  WORD  Internal   ABS    469  private  bss          1     1  -
+optionopt3                            4805         no  WORD  Internal   ABS    471  private  bss          1     1  -
+optionnopt3                           4806         no  WORD  Internal   ABS    473  private  bss          1     1  -
+optionopt4                            4807         no  WORD  Internal   ABS    475  private  bss          1     1  -
+optionnopt4                           4808         no  WORD  Internal   ABS    477  private  bss          1     1  -
+optionopt5                            4809         no  WORD  Internal   ABS    479  private  bss          1     1  -
+optionnopt5                           480A         no  WORD  Internal   ABS    481  private  bss          1     1  -
+optionopt6                            480B         no  WORD  Internal   ABS    483  private  bss          1     1  -
+optionnopt6                           480C         no  WORD  Internal   ABS    485  private  bss          1     1  -
+optionopt7                            480D         no  WORD  Internal   ABS    487  private  bss          1     1  -
+optionnopt7                           480E         no  WORD  Internal   ABS    489  private  bss          1     1  -
+
+rstsr                                 50B3         no  WORD  Internal   ABS    125  private  bss          1     1  -
+
+spicr1                                5200         no  WORD  Internal   ABS    177  private  bss          1     1  -
+spicr2                                5201         no  WORD  Internal   ABS    179  private  bss          1     1  -
+spiicr                                5202         no  WORD  Internal   ABS    181  private  bss          1     1  -
+spisr                                 5203         no  WORD  Internal   ABS    183  private  bss          1     1  -
+spidr                                 5204         no  WORD  Internal   ABS    185  private  bss          1     1  -
+spicrcpr                              5205         no  WORD  Internal   ABS    187  private  bss          1     1  -
+spirxcrcr                             5206         no  WORD  Internal   ABS    189  private  bss          1     1  -
+spitxcrcr                             5207         no  WORD  Internal   ABS    191  private  bss          1     1  -
+swimcsr                               7F80         no  WORD  Internal   ABS    540  private  bss          1     1  -
+start                                 800B         no  WORD  Internal   ABS    574  private  textdata    12     0  -
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 15  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+
+tim1cr1                               5250         no  WORD  Internal   ABS    265  private  bss          1     1  -
+tim1cr2                               5251         no  WORD  Internal   ABS    267  private  bss          1     1  -
+tim1smcr                              5252         no  WORD  Internal   ABS    269  private  bss          1     1  -
+tim1etr                               5253         no  WORD  Internal   ABS    271  private  bss          1     1  -
+tim1ier                               5254         no  WORD  Internal   ABS    273  private  bss          1     1  -
+tim1sr1                               5255         no  WORD  Internal   ABS    275  private  bss          1     1  -
+tim1sr2                               5256         no  WORD  Internal   ABS    277  private  bss          1     1  -
+tim1egr                               5257         no  WORD  Internal   ABS    279  private  bss          1     1  -
+tim1ccmr1                             5258         no  WORD  Internal   ABS    281  private  bss          1     1  -
+tim1ccmr2                             5259         no  WORD  Internal   ABS    283  private  bss          1     1  -
+tim1ccmr3                             525A         no  WORD  Internal   ABS    285  private  bss          1     1  -
+tim1ccmr4                             525B         no  WORD  Internal   ABS    287  private  bss          1     1  -
+tim1ccer1                             525C         no  WORD  Internal   ABS    289  private  bss          1     1  -
+tim1ccer2                             525D         no  WORD  Internal   ABS    291  private  bss          1     1  -
+tim1cntrh                             525E         no  WORD  Internal   ABS    293  private  bss          1     1  -
+tim1cntrl                             525F         no  WORD  Internal   ABS    295  private  bss          1     1  -
+tim1pscrh                             5260         no  WORD  Internal   ABS    297  private  bss          1     1  -
+tim1pscrl                             5261         no  WORD  Internal   ABS    299  private  bss          1     1  -
+tim1arrh                              5262         no  WORD  Internal   ABS    301  private  bss          1     1  -
+tim1arrl                              5263         no  WORD  Internal   ABS    303  private  bss          1     1  -
+tim1rcr                               5264         no  WORD  Internal   ABS    305  private  bss          1     1  -
+tim1ccr1h                             5265         no  WORD  Internal   ABS    307  private  bss          1     1  -
+tim1ccr1l                             5266         no  WORD  Internal   ABS    309  private  bss          1     1  -
+tim1ccr2h                             5267         no  WORD  Internal   ABS    311  private  bss          1     1  -
+tim1ccr2l                             5268         no  WORD  Internal   ABS    313  private  bss          1     1  -
+tim1ccr3h                             5269         no  WORD  Internal   ABS    315  private  bss          1     1  -
+tim1ccr3l                             526A         no  WORD  Internal   ABS    317  private  bss          1     1  -
+tim1ccr4h                             526B         no  WORD  Internal   ABS    319  private  bss          1     1  -
+tim1ccr4l                             526C         no  WORD  Internal   ABS    321  private  bss          1     1  -
+tim1bkr                               526D         no  WORD  Internal   ABS    323  private  bss          1     1  -
+tim1dtr                               526E         no  WORD  Internal   ABS    325  private  bss          1     1  -
+tim1oisr                              526F         no  WORD  Internal   ABS    327  private  bss          1     1  -
+tim2cr1                               5300         no  WORD  Internal   ABS    330  private  bss          1     1  -
+tim2ier                               5301         no  WORD  Internal   ABS    332  private  bss          1     1  -
+tim2sr1                               5302         no  WORD  Internal   ABS    334  private  bss          1     1  -
+tim2sr2                               5303         no  WORD  Internal   ABS    336  private  bss          1     1  -
+tim2egr                               5304         no  WORD  Internal   ABS    338  private  bss          1     1  -
+tim2ccmr1                             5305         no  WORD  Internal   ABS    340  private  bss          1     1  -
+tim2ccmr2                             5306         no  WORD  Internal   ABS    342  private  bss          1     1  -
+tim2ccmr3                             5307         no  WORD  Internal   ABS    344  private  bss          1     1  -
+tim2ccer1                             5308         no  WORD  Internal   ABS    346  private  bss          1     1  -
+tim2ccer2                             5309         no  WORD  Internal   ABS    348  private  bss          1     1  -
+tim2cntrh                             530A         no  WORD  Internal   ABS    350  private  bss          1     1  -
+tim2cntrl                             530B         no  WORD  Internal   ABS    352  private  bss          1     1  -
+tim2pscr                              530C         no  WORD  Internal   ABS    354  private  bss          1     1  -
+tim2arrh                              530D         no  WORD  Internal   ABS    356  private  bss          1     1  -
+tim2arrl                              530E         no  WORD  Internal   ABS    358  private  bss          1     1  -
+tim2ccr1h                             530F         no  WORD  Internal   ABS    360  private  bss          1     1  -
+tim2ccr1l                             5310         no  WORD  Internal   ABS    362  private  bss          1     1  -
+tim2ccr2h                             5311         no  WORD  Internal   ABS    364  private  bss          1     1  -
+tim2ccr2l                             5312         no  WORD  Internal   ABS    366  private  bss          1     1  -
+tim2ccr3h                             5313         no  WORD  Internal   ABS    368  private  bss          1     1  -
+tim2ccr3l                             5314         no  WORD  Internal   ABS    370  private  bss          1     1  -
+tim3cr1                               5320         no  WORD  Internal   ABS    373  private  bss          1     1  -
+tim3ier                               5321         no  WORD  Internal   ABS    375  private  bss          1     1  -
+tim3sr1                               5322         no  WORD  Internal   ABS    377  private  bss          1     1  -
+STMicroelectronics assembler v4.52   (C)1987-2018   Thu Oct 04 00:04:24 2018
+Page 16  Assembler
+                                               c:\naivesdk\stm8s\examples\minimalblink.asm
+
+tim3sr2                               5323         no  WORD  Internal   ABS    379  private  bss          1     1  -
+tim3egr                               5324         no  WORD  Internal   ABS    381  private  bss          1     1  -
+tim3ccmr1                             5325         no  WORD  Internal   ABS    383  private  bss          1     1  -
+tim3ccmr2                             5326         no  WORD  Internal   ABS    385  private  bss          1     1  -
+tim3ccer1                             5327         no  WORD  Internal   ABS    387  private  bss          1     1  -
+tim3cntrh                             5328         no  WORD  Internal   ABS    389  private  bss          1     1  -
+tim3cntrl                             5329         no  WORD  Internal   ABS    391  private  bss          1     1  -
+tim3pscr                              532A         no  WORD  Internal   ABS    393  private  bss          1     1  -
+tim3arrh                              532B         no  WORD  Internal   ABS    395  private  bss          1     1  -
+tim3arrl                              532C         no  WORD  Internal   ABS    397  private  bss          1     1  -
+tim3ccr1h                             532D         no  WORD  Internal   ABS    399  private  bss          1     1  -
+tim3ccr1l                             532E         no  WORD  Internal   ABS    401  private  bss          1     1  -
+tim3ccr2h                             532F         no  WORD  Internal   ABS    403  private  bss          1     1  -
+tim3ccr2l                             5330         no  WORD  Internal   ABS    405  private  bss          1     1  -
+tim4cr1                               5340         no  WORD  Internal   ABS    408  private  bss          1     1  -
+tim4ier                               5341         no  WORD  Internal   ABS    410  private  bss          1     1  -
+tim4sr                                5342         no  WORD  Internal   ABS    412  private  bss          1     1  -
+tim4egr                               5343         no  WORD  Internal   ABS    414  private  bss          1     1  -
+tim4cntr                              5344         no  WORD  Internal   ABS    416  private  bss          1     1  -
+tim4pscr                              5345         no  WORD  Internal   ABS    418  private  bss          1     1  -
+tim4arr                               5346         no  WORD  Internal   ABS    420  private  bss          1     1  -
+
+uart1sr                               5230         no  WORD  Internal   ABS    222  private  bss          1     1  -
+uart1dr                               5231         no  WORD  Internal   ABS    224  private  bss          1     1  -
+uart1brr1                             5232         no  WORD  Internal   ABS    226  private  bss          1     1  -
+uart1brr2                             5233         no  WORD  Internal   ABS    228  private  bss          1     1  -
+uart1cr1                              5234         no  WORD  Internal   ABS    230  private  bss          1     1  -
+uart1cr2                              5235         no  WORD  Internal   ABS    232  private  bss          1     1  -
+uart1cr3                              5236         no  WORD  Internal   ABS    234  private  bss          1     1  -
+uart1cr4                              5237         no  WORD  Internal   ABS    236  private  bss          1     1  -
+uart1cr5                              5238         no  WORD  Internal   ABS    238  private  bss          1     1  -
+uart1gtr                              5239         no  WORD  Internal   ABS    240  private  bss          1     1  -
+uart1pstr                             523A         no  WORD  Internal   ABS    242  private  bss          1     1  -
+uart3sr                               5240         no  WORD  Internal   ABS    245  private  bss          1     1  -
+uart3dr                               5241         no  WORD  Internal   ABS    247  private  bss          1     1  -
+uart3brr1                             5242         no  WORD  Internal   ABS    249  private  bss          1     1  -
+uart3brr2                             5243         no  WORD  Internal   ABS    251  private  bss          1     1  -
+uart3cr1                              5244         no  WORD  Internal   ABS    253  private  bss          1     1  -
+uart3cr2                              5245         no  WORD  Internal   ABS    255  private  bss          1     1  -
+uart3cr3                              5246         no  WORD  Internal   ABS    257  private  bss          1     1  -
+uart3cr4                              5247         no  WORD  Internal   ABS    259  private  bss          1     1  -
+uart3cr6                              5249         no  WORD  Internal   ABS    262  private  bss          1     1  -
+unicidx                               48CD         no  WORD  Internal   ABS    440  private  bss          2     2  -
+unicidy                               48CF         no  WORD  Internal   ABS    442  private  bss          2     2  -
+unicidwafer                           48D1         no  WORD  Internal   ABS    444  private  bss          1     1  -
+unicidlot0                            48D2         no  WORD  Internal   ABS    446  private  bss          1     1  -
+unicidlot1                            48D3         no  WORD  Internal   ABS    448  private  bss          1     1  -
+unicidlot2                            48D4         no  WORD  Internal   ABS    450  private  bss          1     1  -
+unicidlot3                            48D5         no  WORD  Internal   ABS    452  private  bss          1     1  -
+unicidlot4                            48D6         no  WORD  Internal   ABS    454  private  bss          1     1  -
+unicidlot5                            48D7         no  WORD  Internal   ABS    456  private  bss          1     1  -
+unicidlot6                            48D8         no  WORD  Internal   ABS    458  private  bss          1     1  -
+
+wwdgcr                                50D1         no  WORD  Internal   ABS    156  private  bss          1     1  -
+wwdgwr                                50D2         no  WORD  Internal   ABS    158  private  bss          1     1  -
+
+
+268 labels
+No errors on assembly of 'c:\naivesdk\stm8s\examples\minimalblink.asm'

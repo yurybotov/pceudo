@@ -1,0 +1,47 @@
+// move a to the end of ringbuf
+u2rxatoringbuf: push x; push a; x=#0; a=u2rxs; xl=a; a++; a?u2rxz
+	if z=0 u2rxatoringbufnotzero
+	pop a; u2rxb[x]=a; u2rxs=#0; go near u2rxatoringbufend
+	u2rxatoringbufnotzero:
+	pop a; u2rxb[x]=a; u2rxs++
+	u2rxatoringbufend:	u2rxl++; pop x; ret
+u2txatoringbuf: push x; push a; x=#0; a=u2txs; xl=a; a++; a?u2txz
+	if z=0 u2txatoringbufnotzero
+	pop a; u2txb[x]=a; u2txs=#0; go near u2txatoringbufend
+	u2txatoringbufnotzero:
+	pop a; u2txb[x]=a; u2txs++
+	u2txatoringbufend:	u2txl++; pop x; ret
+// move ringbuf first to a
+u2rxringbuftoa: push x; x=#0; a=u2rxe; xl=a; a++; a?u2rxz
+	if z=0 u2rxringbuftoanotzero
+	a=u2rxb[x]; u2rxe=#0; go near u2rxringbuftoaend
+	u2rxringbuftoanotzero: a = u2rxb[x]; u2rxe++ 
+	u2rxringbuftoaend: u2rxl--; pop x; ret
+u2txringbuftoa: push x; x=#0; a=u2txe; xl=a; a++; a?u2txz
+	if z=0 u2txringbuftoanotzero
+	a=u2txb[x]; u2txe=#0; go near u2txringbuftoaend
+	u2txringbuftoanotzero: a = u2txb[x]; u2txe++ 
+	u2txringbuftoaend: u2txl--; pop x; ret
+// test is ringbuf free or not
+u2rxringbufready: ?u2rxl; if z=0 u2rxbufready; a = #0; ret; u2rxbufready: a=1; ret
+u2txringbufready: a=u2txz; a--; a?u2txl; if z=0 u2txbufready; a = #0; ret; u2txbufready: a=1; ret
+
+// interrupt handlers
+uart2rxhandler:
+    push a
+    if uart2 sr#5=0 uart2rxhandler
+	a = uart2 dr
+	call u2rxatoringbuf
+    pop a
+	iret
+uart2txhandler:
+//  if uart2 sr#5=0 uart1txhandler
+    push a
+    call u2txringbuftoa
+    ?u2txl; if z=1 u2txnotother 
+	uart2 dr = a
+    u2txnotother:
+	pop a;
+	iret
+
+           

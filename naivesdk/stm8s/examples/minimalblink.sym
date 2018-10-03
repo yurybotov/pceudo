@@ -1,0 +1,15 @@
+000002;00001;
+'CONSTANTS' 
+
+'reg' V
+
+'ram' V
+
+'eeprom' V
+
+'flash' CS
+
+'hiflash' V
+
+'unify' D
+

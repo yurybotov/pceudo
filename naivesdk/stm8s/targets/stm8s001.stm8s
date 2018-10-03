@@ -9,6 +9,8 @@ define eepromstart 0x4000
 define eepromend 0x407f
 define flashstart 0x8000
 define flashend 0x9fff
+define flashstart -1
+define flashend -1
 
 define farptr   0
 
