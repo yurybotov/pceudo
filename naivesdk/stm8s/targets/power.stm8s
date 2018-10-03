@@ -1,0 +1,28 @@
+ifndef powerfile
+define powerfile
+
+define Power.on.all  	clkpckenr1=0xff; clkpckenr2=0xff
+define Power.off.all  	clkpckenr1=0; clkpckenr2=0
+
+define Power.on.tim1    clkpckenr1#7=1
+define Power.off.tim1   clkpckenr1#7=0
+define Power.on.tim2    clkpckenr1#5=1
+define Power.off.tim2   clkpckenr1#5=0
+define Power.on.tim3    clkpckenr1#6=1
+define Power.off.tim3   clkpckenr1#6=0
+define Power.on.tim4    clkpckenr1#4=1
+define Power.off.tim4   clkpckenr1#4=0
+define Power.on.uart1   clkpckenr1#2=1
+define Power.off.uart1  clkpckenr1#2=0
+define Power.on.uart2   clkpckenr1#3=1
+define Power.off.uart2  clkpckenr1#3=0
+define Power.on.spi     clkpckenr1#1=1
+define Power.off.spi    clkpckenr1#1=0
+define Power.on.i2c     clkpckenr1#0=1
+define Power.off.i2c    clkpckenr1#0=0
+define Power.on.awu     clkpckenr2#2=1
+define Power.off.awu    clkpckenr2#2=0
+define Power.on.adc     clkpckenr2#3=1
+define Power.off.adc    clkpckenr2#3=0
+
+endif

@@ -1,0 +1,15 @@
+ifndef tim2file
+define tim2file
+
+define usingtim2uhandler
+
+// pre 0-15
+// counter - 0-65535
+
+define 	Timer2.init(pre,counter) tim2ier#0=1;\ 
+		inline mov tim2pscr,#pre;\
+		inline mov tim2arrh,#{high counter};\
+		inline mov tim2arrl,#{low counter};\
+		tim2cr1#2=1; tim2cr1#7=1; tim2cr1#0=1;
+
+endif

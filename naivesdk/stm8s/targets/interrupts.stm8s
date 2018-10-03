@@ -1,0 +1,192 @@
+ifndef interruptsfile
+define interruptsfile
+
+
+interrupt reset@0x8000: (f32) {0x82000000+start}
+
+ifdef usingtraphandler
+interrupt trap:         (f32) {0x82000000+ontrap}
+endif
+ifndef usingtraphandler
+interrupt trap:         (f32) {0x82000000+dumb}
+endif
+
+ifdef usingtlihandler
+interrupt tli:         (f32) {0x82000000+ontli}
+endif
+ifndef usingtlihandler
+interrupt tli:         (f32) {0x82000000+dumb}
+endif
+
+ifdef usingawuhandler
+interrupt awu:         (f32) {0x82000000+onawu}
+endif
+ifndef usingawuhandler
+interrupt awu:         (f32) {0x82000000+dumb}
+endif
+
+ifdef usingclkhandler
+interrupt clk:         (f32) {0x82000000+onclk}
+endif
+ifndef usingclkhandler
+interrupt clk:         (f32) {0x82000000+dumb}
+endif
+
+ifdef usingexti0handler
+interrupt exti0:       (f32) {0x82000000+onexti0}
+endif
+ifndef usingexti0handler
+interrupt exti0:       (f32) {0x82000000+dumb}
+endif
+
+ifdef usingexti1handler
+interrupt exti1:       (f32) {0x82000000+onexti1}
+endif
+ifndef usingexti1handler
+interrupt exti1:       (f32) {0x82000000+dumb}
+endif
+
+ifdef usingexti2handler
+interrupt exti2:       (f32) {0x82000000+onexti2}
+endif
+ifndef usingexti2handler
+interrupt exti2:       (f32) {0x82000000+dumb}
+endif
+
+ifdef usingexti3handler
+interrupt exti3:       (f32) {0x82000000+onexti3}
+endif
+ifndef usingexti3handler
+interrupt exti3:       (f32) {0x82000000+dumb}
+endif
+
+ifdef usingexti4handler
+interrupt exti4:       (f32) {0x82000000+onexti4}
+endif
+ifndef usingexti4handler
+interrupt exti4:       (f32) {0x82000000+dumb}
+endif
+
+ifdef usingcanrxhandler
+interrupt canrx:       (f32) {0x82000000+oncanrx}
+endif
+ifndef usingcanrxhandler
+interrupt canrx:       (f32) {0x82000000+dumb}
+endif
+
+ifdef usingcantxhandler
+interrupt cantx:       (f32) {0x82000000+oncantx}
+endif
+ifndef usingcanrxhandler
+interrupt cantx:       (f32) {0x82000000+dumb}
+endif
+
+ifdef usingspihandler
+interrupt spi:      	(f32) {0x82000000+onspi}
+endif
+ifndef usingspihandler
+interrupt spi:      	(f32) {0x82000000+dumb}
+endif
+
+ifdef usingtim1uhandler
+interrupt tim1u:        (f32) {0x82000000+ontim1u}
+endif
+ifndef usingtim1uhandler
+interrupt tim1u:        (f32) {0x82000000+dumb}
+endif
+ifdef usingtim1chandler
+
+interrupt tim1c:        (f32) {0x82000000+ontim1c}
+endif
+ifndef usingtim1uhandler
+interrupt tim1c:        (f32) {0x82000000+dumb}
+endif
+
+ifdef usingtim2uhandler
+interrupt tim2u:        (f32) {0x82000000+ontim2u}
+endif
+ifndef usingtim2uhandler
+interrupt tim2u:        (f32) {0x82000000+dumb}
+endif
+
+ifdef usingtim2chandler
+interrupt tim2c:        (f32) {0x82000000+ontim2c}
+endif
+ifndef usingtim2chandler
+interrupt tim2c:        (f32) {0x82000000+dumb}
+endif
+
+ifdef usingtim3uhandler
+interrupt tim3u:        (f32) {0x82000000+ontim3u}
+endif
+ifndef usingtim3uhandler
+interrupt tim3u:        (f32) {0x82000000+dumb}
+endif
+
+ifdef usingtim3chandler
+interrupt tim3c:        (f32) {0x82000000+ontim3c}
+endif
+ifndef usingtim3chandler
+interrupt tim3c:        (f32) {0x82000000+dumb}
+endif
+
+ifdef usinguart1rxhandler
+interrupt uart1rx:      (f32) {0x82000000+onuart1rx}
+endif
+ifndef usinguart1rxhandler
+interrupt uart1rx:      (f32) {0x82000000+dumb}
+endif
+
+ifdef usinguart1txhandler
+interrupt uart1tx:      (f32) {0x82000000+onuart1tx}
+endif
+ifndef usinguart1txhandler
+interrupt uart1tx:      (f32) {0x82000000+dumb}
+endif
+
+ifdef usingi2chandler
+interrupt i2c:      	(f32) {0x82000000+oni2c}
+endif
+ifndef usingi2chandler
+interrupt i2c:      	(f32) {0x82000000+dumb}
+endif
+
+ifdef usinguart3rxhandler
+interrupt uart3rx:      (f32) {0x82000000+onuart3rx}
+endif
+ifndef usinguart3rxhandler
+interrupt uart3rx:      (f32) {0x82000000+dumb}
+endif
+
+ifdef usinguart3txhandler
+interrupt uart3tx:      (f32) {0x82000000+onuart3tx}
+endif
+ifndef usinguart3txhandler
+interrupt uart3tx:      (f32) {0x82000000+dumb}
+endif
+
+ifdef usingadchandler
+interrupt adc:      	(f32) {0x82000000+onadc}
+endif
+ifndef usingadchandler
+interrupt adc:      	(f32) {0x82000000+dumb}
+endif
+
+ifdef usingtim4uhandler
+interrupt tim4u:      	(f32) {0x82000000+ontim4u}
+endif
+ifndef usingtim4uhandler
+interrupt tim4u:      	(f32) {0x82000000+dumb}
+endif
+
+ifdef usingflashhandler
+interrupt flash:      	(f32) {0x82000000+onflash}
+endif
+ifndef usingflashhandler
+interrupt flash:      	(f32) {0x82000000+dumb}
+endif
+
+dumb: iret
+    
+
+endif

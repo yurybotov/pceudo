@@ -1,0 +1,45 @@
+ifndef clockfile
+define clockfile
+
+// set external quarz clock
+
+// divider is summa of 2 part:
+// 0 - fmaster = hsi
+// 8 - fmaster = hsi/2
+// 16 - fmaster = hsi/4
+// 24 - fmaster = hsi/8
+// +
+// 0 - fcpu = fmaster
+// 1 - fcpu = fmaster/2
+// 2 - fcpu = fmaster/4
+// 3 - fcpu = fmaster/8
+// 4 - fcpu = fmaster/16
+// 5 - fcpu = fmaster/32
+// 6 - fcpu = fmaster/64
+// 7 - fcpu = fmaster/128
+define Clock.external(divider) 	clk eckr#0=1;\
+				clk swcr#1=1;\
+			@1: 	if clk eckr#1=0 @1;\
+				clk ckdivr=divider;\
+				clk swr=0xb4;\
+			@2: 	if clk swcr#3=0 @2\
+
+// set internal clock
+
+// divider is:
+// 0 - fcpu = fmaster
+// 1 - fcpu = fmaster/2
+// 2 - fcpu = fmaster/4
+// 3 - fcpu = fmaster/8
+// 4 - fcpu = fmaster/16
+// 5 - fcpu = fmaster/32
+// 6 - fcpu = fmaster/64
+// 7 - fcpu = fmaster/128
+define Clock.internal(divider) 	clk ickr=0; clk ickr#0=1; clk eckr=0;\
+			@1: 	if clk ickr#1=0 @1;\
+				clk ckdivr=divider; clk ccor=0; clk hsitrimr=0;\
+				clk swimccr=0; clk swr=0xe1; clk swcr=0; clk swcr#1=1;\
+			@2: 	if clk swcr#0=1 @2;
+
+
+endif

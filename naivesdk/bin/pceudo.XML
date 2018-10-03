@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>pceudo</name></assembly>
+<members>
+<member name="P:avr.cmds">
+<summary>
+ ????  mul(other types), cpc,  elpm, wdr, bset,bclr - use inline!
+</summary>
+</member>
+</members>
+</doc>

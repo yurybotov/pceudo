@@ -1,0 +1,54 @@
+u1init:
+	u1rxs=0; u1txs=0; u1rxe=0; u1txe=0; u1rxl=0; u1txl=0
+	uart1cr#4=0; uart1cr3#4=0; uart1cr3#5=0; uart1cr11=0; uart1cr1#2=0; uart1cr10=0;
+	
+	uart1cr5#3=0; uart1cr2#2=0; uart1cr2#3=0; uart1cr3=0;
+	uart1cr5#3=1; uart1cr2#2=1; uart1sr#5=0; uart1cr2#7=1; uart1cr2#6=1; uart1cr2#5=1; uart1cr2#3=1; uart1cr2#2=1;
+	ret
+// move a to the end of ringbuf
+u1rxatoringbuf: push x; push a; x=0; a=u1rxs; xl=a; a++; a?u1rxz
+	if z=0 u1rxatoringbufnotzero
+	pop a; u1rxb[x]=a; u1rxs=0; go near u1rxatoringbufend
+	u1rxatoringbufnotzero:
+	pop a; u1rxb[x]=a; u1rxs++
+	u1rxatoringbufend:	u1rxl++; pop x; ret
+u1txatoringbuf: push x; push a; x=0; a=u1txs; xl=a; a++; a?u1txz
+	if z=0 u1txatoringbufnotzero
+	pop a; u1txb[x]=a; u1txs=0; go near u1txatoringbufend
+	u1txatoringbufnotzero:
+	pop a; u1txb[x]=a; u1txs++
+	u1txatoringbufend:	u1txl++; pop x; ret
+// move ringbuf first to a
+u1rxringbuftoa: push x; x=0; a=u1rxe; xl=a; a++; a?u1rxz
+	if z=0 u1rxringbuftoanotzero
+	a=u1rxb[x]; u1rxe=0; go near u1rxringbuftoaend
+	u1rxringbuftoanotzero: a = u1rxb[x]; u1rxe++ 
+	u1rxringbuftoaend: u1rxl--; pop x; ret
+u1txringbuftoa: push x; x=0; a=u1txe; xl=a; a++; a?u1txz
+	if z=0 u1txringbuftoanotzero
+	a=u1txb[x]; u1txe=0; go near u1txringbuftoaend
+	u1txringbuftoanotzero: a = u1txb[x]; u1txe++ 
+	u1txringbuftoaend: u1txl--; pop x; ret
+// test is ringbuf free or not
+u1rxringbufready: if u1rxl<>0 u1rxbufready; a = 0; ret; u1rxbufready: a=1; ret
+u1txringbufready: a=u1txz; a--; a?u1txl; if z=0 u1txbufready; a = 0; ret; u1txbufready: a=1; ret
+
+// interrupt handlers
+onuart1rx:
+    push a
+    if uart1 sr#5=0 uart1rxhandler
+	a = uart1dr
+	call u1rxatoringbuf
+    pop a
+	iret
+onuart1tx:
+//  if uart1 sr#5=0 uart1txhandler
+    push a
+    call u1txringbuftoa
+    if u1txl=0 u1txnotother 
+	uart1dr = a
+    u1txnotother:
+	pop a;
+	iret
+
+         

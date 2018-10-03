@@ -1,0 +1,19 @@
+ifndef uart1file
+define uart1file
+
+include uart
+
+define Uart1.init(master,speed)	uart1cr1=0; uart1cr2=0; uart1cr3=0; uart1cr4=0; uart1cr5=0;\ 
+				uart1cr1#4=0; uart1cr1#2=0; uart1cr3#4=0; uart1cr3#5=0;\
+				inline mov uart1brr2,#{{master/speed} and $0f};\
+				inline mov uart1brr1,#{{{master/speed} shr 4} and $ff};\
+				uart1cr2#3=0; uart1cr2#2=0; uart1cr3#2=1; uart1cr3#1=1; uart1cr3#0=1;\
+				uart1cr2#3=1; uart1cr2#2=1; uart1cr3#3=1;
+
+define Uart1.getc 	a=uart1dr
+
+define Uart1.putc()		@1: if uart1sr#7=0 @1; uart1dr=a
+
+define Uart1.puts(addr)	push x; push a; x=0; @2: a=addr[x]; if a=0 @1; @3: if uart1sr#7=0 @3; uart1dr=a; x++; go near @2; @1: pop a; pop x
+
+endif

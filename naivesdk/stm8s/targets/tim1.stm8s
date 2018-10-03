@@ -1,0 +1,26 @@
+ifndef tim1file
+define tim1file
+
+define usingtim1uhandler
+
+// pre 0-65535
+// counter - 0-65535
+
+define 	Timer1.init(pre,counter) tim1cr2=0; tim1smcr=0; tim1etr=0; tim1ier#0=1;\ 
+		inline mov tim1pscrh,#{high pre};\
+		inline mov tim1pscrl,#{low pre};\
+		inline mov tim1arrh,#{high counter};\
+		inline mov tim1arrl,#{low counter};\
+		tim1cr1#2=1; tim1cr1#0=1
+
+// master - Fmaster
+// milliseconds - 0-65535
+
+define 	Timer1.initms(master,milliseconds) tim1cr2=0; tim1smcr=0; tim1etr=0; tim1ier#0=1;\ 
+		inline mov tim1pscrh,#{high {master/1000}};\
+		inline mov tim1pscrl,#{low {master/1000}};\
+		inline mov tim1arrh,#{high milliseconds};\
+		inline mov tim1arrl,#{low milliseconds};\
+		tim1cr1#2=1; tim1cr1#0=1
+
+endif

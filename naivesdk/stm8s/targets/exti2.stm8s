@@ -1,0 +1,6 @@
+ifndef exti2file
+define exti2file
+
+define usingexti2handler
+
+endif

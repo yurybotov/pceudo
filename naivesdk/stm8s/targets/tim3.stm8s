@@ -1,0 +1,15 @@
+ifndef tim3file
+define tim3file
+
+define usingtim3uhandler
+
+// pre 0-15
+// counter - 0-65535
+
+define 	Timer3.init(pre,counter) tim3ier#0=1;\ 
+		inline mov tim3pscr,#pre;\
+		inline mov tim3arrh,#{high counter};\
+		inline mov tim3arrl,#{low counter};\
+		tim3cr1#2=1; tim3cr1#7=1; tim3cr1#0=1;
+
+endif

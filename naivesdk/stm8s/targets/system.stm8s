@@ -1,0 +1,11 @@
+ifndef systemfile
+define systemfile
+
+// stack initialisation
+define Stack.init(stackponter)  x=stackponter;sp=x 
+
+// global interrupt handling
+define Interrupt.enable		i=0
+define Interrupt.disable	i=1  
+  
+endif

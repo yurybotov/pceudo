@@ -1,0 +1,6 @@
+ifndef spifile
+define spifile
+
+define usingspihandler
+
+endif

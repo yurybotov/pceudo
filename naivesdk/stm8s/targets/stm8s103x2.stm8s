@@ -1,0 +1,29 @@
+ifndef stm8s103x2
+define stm8s103x2
+
+define regstart 0x0
+define regend 0x00ff
+define ramstart 0x100
+define ramend 0x03ff
+define eepromstart 0x4000
+define eepromend 0x427f
+define flashstart 0x8000
+define flashend 0x8fff
+
+define farptr   0
+
+define canusegpio
+define canuseuart1
+define canuseadc
+define canuseawu
+define canusetim1
+define canusetim2
+define canusetim4
+define canusespi
+define canusei2c
+
+define Serial Uart1
+
+include stm8s.stm8s
+
+endif

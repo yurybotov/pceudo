@@ -1,0 +1,46 @@
+include stm8s207x8
+
+//define Fhse	8000000
+define Fmaster	2000000
+
+include system
+include clock
+include gpio
+include tim1
+include uart1
+
+//
+// 'blink + serial output' with timer1
+// serial speed 9600
+//
+
+define led	6
+
+include interrupts
+
+testline: (f8)[11] "testline..."                        // testline
+	(f8) {32}                                       // space
+	(f8) {0}                                        // zero termination
+
+ontim1u:
+	if tim1 sr1#0 = 0 otherint			// is this right interrupt?
+	tim1 sr1#0 = 0					// drop flag
+	Gpiod.invert(led)                               // invert led status
+	a = 42
+	Uart1.putc()                                 // write "*"
+otherint: iret
+
+// main block
+start:	
+	Stack.init(ramend)                       	// initialise stack pointer (it is assembler!!!)
+	Timer1.initms(Fmaster,500)                      // init timer as 500 ms
+	Uart1.init(Fmaster,9600)                       // init serial port
+	Uart.atA4A5      				// serial port legs
+	Gpiod.output(led)              			// init led port
+	Gpiod.pushup(led)
+	Uart1.puts(testline)                           // write testline
+	Interrupt.enable
+
+loop:   waiti                                           // wait interrupt
+	go near loop					// forever cycle
+  

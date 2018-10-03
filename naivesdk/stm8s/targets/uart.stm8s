@@ -1,0 +1,8 @@
+ifndef uartfile
+define uartfile
+
+define Uart.atA4A5	gpioaddr#5=1; gpioacr1#5=1; gpioaddr#4=0; gpioacr1#4=0; gpioacr2#4=0
+
+define Uart.atD5D6	gpiodddr#5=1; gpiodcr1#5=1; gpiodddr#6=0; gpiodcr1#6=0; gpiodcr2#6=0
+
+endif

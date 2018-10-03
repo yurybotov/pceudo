@@ -1,0 +1,31 @@
+ifndef stm8s207xb
+define stm8s207xb
+
+define regstart 0x0
+define regend 0x00ff
+define ramstart 0x100
+define ramend 0x17ff
+define eepromstart 0x4000
+define eepromend 0x47ff
+define flashstart 0x8000
+define flashend 0x27fff
+
+define farptr   1
+
+define canusegpio
+define canuseuart1
+define canuseuart3
+define canuseadc
+define canuseawu
+define canusetim1
+define canusetim2
+define canusetim3
+define canusetim4
+define canusespi
+define canusei2c
+
+define Serial Uart1
+
+include stm8s.stm8s
+
+endif

@@ -1,0 +1,67 @@
+//
+// Stm8s application template
+// 
+
+// select (uncomment) chip family and comment other
+//include stm8s001
+//include stm8s003
+//include stm8s103x2
+include stm8s103x3
+//include stm8s105x4
+//include stm8s105x6
+//include stm8s207x6
+//include stm8s207x8
+//include stm8s207xb
+
+// inser here right master clock value, this value is for default: hsi clock with divider 8
+define Fmaster 2000000
+
+// using pereferial devices, unkomment if needed
+include system
+include clock
+//include trap
+//include tli
+//include awu
+//include clk
+//include exti0
+//include exti1
+//include exti2
+//include exti3
+//include exti4
+//include tim1
+//include tim2
+//include tim3
+//include tim4
+//include uart1
+//include uart2
+//include uart3
+//include can
+//include spi
+//include i2c
+//include adc
+//include flash
+include gpio
+
+// interrupt vectors
+include interrupts
+
+// do not write own code or data before this place
+// here place for you own definitions and includes
+
+// program start or reset
+start:
+	Stack.init(ramend)                       	// initialise stack pointer (it is assembler!!!)
+	Clock.internal(3)				// hsi with divider 8
+
+	// here other init code
+
+loop: nop              
+	
+	// here repeated code
+                               
+	go loop						// forever cycle
+
+// your interrupt handlers
+
+// here will be code of connected with include standard libraries 
+include libraries

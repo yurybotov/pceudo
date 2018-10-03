@@ -1,0 +1,15 @@
+ifndef flashfile
+define flashfile
+
+
+define Eeprom.unprotect	flashdukr=0xae; flashdukr=0x56
+
+define Flash.unprotect	flashpukr=0x56; flashpukr=0xae
+
+define Eeprom.protect flashiapsr#3=0
+
+define Flash.protect flashiapsr#1=0
+
+// todo waiting macros
+
+endif

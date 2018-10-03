@@ -1,0 +1,6 @@
+ifndef canfile
+define canfile
+
+define usingcanhandler
+
+endif

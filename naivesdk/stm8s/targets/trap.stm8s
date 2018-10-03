@@ -1,0 +1,6 @@
+ifndef trapfile
+define trapfile
+
+define usingtraphandler
+ 
+endif

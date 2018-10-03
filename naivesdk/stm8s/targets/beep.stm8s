@@ -1,0 +1,14 @@
+ifndef beepfile
+define beepfile
+
+define Beep.init        clkickr#3=1; beepcsr=0x1c; gpiodddr#4=1; gpiodcr1#4=1;
+
+define Beep.mute	beepcsr#5=0
+
+define Beep.1000 	beepcsr#6=0;beepcsr#7=0;beepcsr#5=1
+
+define Beep.2000	beepcsr#6=1;beepcsr#7=0;beepcsr#5=1
+
+define Beep.4000      	beepcsr#6=1;beepcsr#7=1;beepcsr#5=1
+
+endif

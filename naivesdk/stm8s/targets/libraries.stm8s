@@ -1,0 +1,17 @@
+ifdef usinguart1txhandler
+ifdef usinguart1rxhandler
+//include uart1proc
+endif
+endif
+
+ifdef usinguart2txhandler
+ifdef usinguart2rxhandler
+//include uart2proc
+endif
+endif
+
+ifdef usinguart3txhandler
+ifdef usinguart3rxhandler
+//include uart3proc
+endif
+endif

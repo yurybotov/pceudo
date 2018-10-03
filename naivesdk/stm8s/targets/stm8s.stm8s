@@ -1,0 +1,132 @@
+ifndef stm8sfile
+define stm8sfile
+
+// HSI frequency
+
+define Fhsi	16000000
+
+// ports
+
+gpioa odr@0x5000: (u8); gpioa idr: (u8); gpioa ddr: (u8); gpioa cr1: (u8); gpioa cr2: (u8)
+gpiob odr: (u8); gpiob idr: (u8); gpiob ddr: (u8); gpiob cr1: (u8); gpiob cr2: (u8)
+gpioc odr: (u8); gpioc idr: (u8); gpioc ddr: (u8); gpioc cr1: (u8); gpioc cr2: (u8)
+gpiod odr: (u8); gpiod idr: (u8); gpiod ddr: (u8); gpiod cr1: (u8); gpiod cr2: (u8)
+gpioe odr: (u8); gpioe idr: (u8); gpioe ddr: (u8); gpioe cr1: (u8); gpioe cr2: (u8)
+gpiof odr: (u8); gpiof idr: (u8); gpiof ddr: (u8); gpiof cr1: (u8); gpiof cr2: (u8)
+gpiog odr: (u8); gpiog idr: (u8); gpiog ddr: (u8); gpiog cr1: (u8); gpiog cr2: (u8)
+gpioh odr: (u8); gpioh idr: (u8); gpioh ddr: (u8); gpioh cr1: (u8); gpioh cr2: (u8)
+gpioi odr: (u8); gpioi idr: (u8); gpioi ddr: (u8); gpioi cr1: (u8); gpioi cr2: (u8)
+
+flash cr1@0x505a: (u8); flash cr2: (u8); flash ncr2: (u8); flash fpr: (u8); flash nfpr: (u8)
+flash iapsr: (u8);  flash pukr@0x5062: (u8); flash dukr@0x5064: (u8)
+
+itc exticr1@0x50a0: (u8); itc exticr2: (u8)
+
+rst sr@0x50b3: (u8)
+
+clk ickr@0x50c0: (u8); clk eckr: (u8); clk cmsr@0x50c3: (u8); clk swr: (u8); clk swcr: (u8)
+clk ckdivr: (u8); clk pckenr1: (u8); clk cssr: (u8); clk ccor: (u8); clk pckenr2: (u8);
+clk canccr: (u8); clk hsitrimr: (u8); clk swimccr: (u8)
+
+wwdg cr@0x50d1: (u8); wwdg wr: (u8)
+
+iwdg kr@0x50e0: (u8); iwdg pr: (u8);  iwdg rlr: (u8)
+
+ifdef canuseawu
+awu csr1@0x50f0: (u8); awu apr: (u8);  awu tbr: (u8)
+endif
+
+beep csr: (u8)
+
+ifdef canusespi
+spi cr1@0x5200: (u8); spi cr2: (u8); spi icr: (u8); spi sr: (u8); spi dr: (u8); spi crcpr: (u8)
+spi rxcrcr: (u8); spi txcrcr: (u8)
+endif
+
+ifdef canusei2c
+i2c cr1@0x5210: (u8); i2c cr2: (u8); i2c freqr: (u8); i2c oarl: (u8); i2c oarh: (u8); i2c dr@0x5216: (u8)
+i2c sr1: (u8); i2c sr2: (u8); i2c sr3: (u8); i2c itr: (u8); i2c ccrl: (u8); i2c ccrh: (u8); i2c triser: (u8)
+endif
+
+ifdef canuseuart1
+uart1 sr@0x5230: (u8); uart1 dr: (u8); uart1 brr1: (u8); uart1 brr2: (u8); uart1 cr1: (u8); uart1 cr2: (u8)
+uart1 cr3: (u8); uart1 cr4: (u8); uart1 cr5: (u8); uart1 gtr: (u8); uart1 pstr: (u8)
+endif
+
+ifdef canuseuart2
+uart2 sr@0x5240: (u8); uart2 dr: (u8); uart2 brr1: (u8); uart2 brr2: (u8); uart2 cr1: (u8); uart2 cr2: (u8)
+uart2 cr3: (u8); uart2 cr4: (u8); uart2 cr5: (u8); uart2 cr6: (u8); uart2 gtr: (u8); uart2 pscr: (u8)
+endif
+
+ifdef canuseuart3
+uart3 sr@0x5240: (u8); uart3 dr: (u8); uart3 brr1: (u8); uart3 brr2: (u8); uart3 cr1: (u8); uart3 cr2: (u8)
+uart3 cr3: (u8); uart3 cr4: (u8); uart3 cr6@0x5249: (u8)
+endif
+
+ifdef canusetim1
+tim1 cr1@0x5250: (u8); tim1 cr2: (u8); tim1 smcr: (u8); tim1 etr: (u8); tim1 ier: (u8); tim1 sr1: (u8)
+tim1 sr2: (u8); tim1 egr: (u8); tim1 ccmr1: (u8); tim1 ccmr2: (u8);  tim1 ccmr3: (u8); tim1 ccmr4: (u8)
+tim1 ccer1: (u8); tim1 ccer2: (u8); tim1 cntrh: (u8); tim1 cntrl: (u8); tim1 pscrh: (u8); tim1 pscrl: (u8)
+tim1 arrh: (u8); tim1 arrl: (u8); tim1 rcr: (u8); tim1 ccr1h: (u8); tim1 ccr1l: (u8); tim1 ccr2h: (u8)
+tim1 ccr2l: (u8); tim1 ccr3h: (u8); tim1 ccr3l: (u8); tim1 ccr4h: (u8); tim1 ccr4l: (u8); tim1 bkr: (u8)
+tim1 dtr: (u8); tim1 oisr: (u8)
+endif
+
+ifdef canusetim2
+tim2 cr1@0x5300: (u8); tim2 ier: (u8); tim2 sr1: (u8); tim2 sr2: (u8); tim2 egr: (u8); tim2 ccmr1: (u8)
+tim2 ccmr2: (u8); tim2 ccmr3: (u8); tim2 ccer1: (u8); tim2 ccer2: (u8); tim2 cntrh: (u8); tim2 cntrl: (u8)
+tim2 pscr: (u8); tim2 arrh: (u8); tim2 arrl: (u8); tim2 ccr1h: (u8); tim2 ccr1l: (u8); tim2 ccr2h: (u8)
+tim2 ccr2l: (u8); tim2 ccr3h: (u8); tim2 ccr3l: (u8)
+endif
+
+ifdef canusetim3
+tim3 cr1@0x5320: (u8); tim3 ier: (u8); tim3 sr1: (u8); tim3 sr2: (u8); tim3 egr: (u8); tim3 ccmr1: (u8)
+tim3 ccmr2: (u8); tim3 ccer1: (u8); tim3 cntrh: (u8); tim3 cntrl: (u8); tim3 pscr: (u8); 
+tim3 arrh: (u8); tim3 arrl: (u8); tim3 ccr1h: (u8); tim3 ccr1l: (u8); tim3 ccr2h: (u8); tim3 ccr2l: (u8)
+endif
+
+ifdef canusetim4
+tim4 cr1@0x5340: (u8); tim4 ier: (u8); tim4 sr: (u8); tim4 egr: (u8); tim4 cntr: (u8); tim4 pscr: (u8) 
+tim4 arr: (u8);
+endif
+
+ifdef canuseadc
+adc csr@0x5400: (u8); adc cr1: (u8); adc cr2: (u8); adc cr3: (u8); adc drh: (u8); adc drl: (u8) 
+adc tdrh: (u8); adc tdrl: (u8)
+endif
+
+ifdef canusecan
+can mcr@0x5420: (u8); can msr: (u8); can tsr: (u8); can tpr: (u8); can rfr: (u8); can ier: (u8)
+can dgr: (u8); can fpsr: (u8); can p0: (u8); can p1: (u8); can p2: (u8); can p3: (u8); can p4: (u8)
+can p5: (u8); can p6: (u8); can p7: (u8); can p8: (u8); can p9: (u8); can pa: (u8); can pb: (u8); 
+can pc: (u8); can pd: (u8); can pe: (u8); can pf: (u8);
+endif
+
+// chip id
+
+unicid x@0x48cd: (u16); unicid y: (u16); unicid wafer: (u8); unicid lot0: (u8); unicid lot1: (u8);
+unicid lot2: (u8); unicid lot3: (u8); unicid lot4: (u8); unicid lot5: (u8); unicid lot6: (u8);
+
+// option bytes
+
+option opt0@0x4800: (u8); option opt1: (u8); option nopt1: (u8); option opt2: (u8); option nopt2: (u8);
+option opt3: (u8); option nopt3: (u8); option opt4: (u8); option nopt4: (u8); option opt5: (u8); option nopt5: (u8);
+option opt6: (u8); option nopt6: (u8); option opt7: (u8); option nopt7: (u8);
+
+bootloader optbl@0x487e: (u8); bootloader noptbl: (u8);
+
+// debug
+
+cpu a@0x7f00: (u8); cpu pce: (u8); cpu pch: (u8); cpu pcl: (u8); cpu xh: (u8); cpu xl: (u8)
+cpu yh: (u8); cpu yl: (u8); cpu sph: (u8); cpu spl: (u8); cpu ccr: (u8); cpu gcr@0x7f60: (u8)
+
+itc spr1@0x7f70: (u8); itc spr2: (u8); itc spr3: (u8); itc spr4: (u8); itc spr5: (u8); itc spr6: (u8)
+itc spr7: (u8); itc spr8: (u8)
+
+swim csr@0x7f80: (u8);
+
+dm bk1re@0x7f90: (u8); dm bk1rh: (u8); dm bk1rl: (u8); dm bk2re: (u8); dm bk2rh: (u8); dm bk2rl: (u8)
+dm cr1: (u8); dm cr2: (u8); dm csr1: (u8); dm csr2: (u8); dm enfctr: (u8);
+
+
+endif

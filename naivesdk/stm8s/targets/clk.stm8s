@@ -1,0 +1,6 @@
+ifndef clkfile
+define clkfile
+
+define usingclkhandler
+
+endif

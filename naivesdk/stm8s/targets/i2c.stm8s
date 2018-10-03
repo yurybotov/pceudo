@@ -1,0 +1,6 @@
+ifndef i2cfile
+define i2cfile
+
+define usingi2chandler
+
+endif

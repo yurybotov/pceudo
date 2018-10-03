@@ -1,0 +1,149 @@
+ifndef gpiofile
+define gpiofile
+
+define usinggpiohandler
+
+define Gpio.Enable()  
+define Gpio.Disable() 
+
+define Gpioa.output(pin)  gpioaddr#pin=1
+define Gpiob.output(pin)  gpiobddr#pin=1
+define Gpioc.output(pin)  gpiocddr#pin=1
+define Gpiod.output(pin)  gpiodddr#pin=1
+define Gpioe.output(pin)  gpioeddr#pin=1
+define Gpiof.output(pin)  gpiofddr#pin=1
+define Gpiog.output(pin)  gpiogddr#pin=1
+define Gpioh.output(pin)  gpiohddr#pin=1
+define Gpioi.output(pin)  gpioiddr#pin=1
+
+define Gpioa.input(pin)  gpioaddr#pin=0
+define Gpiob.input(pin)  gpiobddr#pin=0
+define Gpioc.input(pin)  gpiocddr#pin=0
+define Gpiod.input(pin)  gpiodddr#pin=0
+define Gpioe.input(pin)  gpioeddr#pin=0
+define Gpiof.input(pin)  gpiofddr#pin=0
+define Gpiog.input(pin)  gpiogddr#pin=0
+define Gpioh.input(pin)  gpiohddr#pin=0
+define Gpioi.input(pin)  gpioiddr#pin=0
+
+define Gpioa.pushup(pin)  gpioacr1#pin=1
+define Gpiob.pushup(pin)  gpiobcr1#pin=1
+define Gpioc.pushup(pin)  gpioccr1#pin=1
+define Gpiod.pushup(pin)  gpiodcr1#pin=1
+define Gpioe.pushup(pin)  gpioecr1#pin=1
+define Gpiof.pushup(pin)  gpiofcr1#pin=1
+define Gpiog.pushup(pin)  gpiogcr1#pin=1
+define Gpioh.pushup(pin)  gpiohcr1#pin=1
+define Gpioi.pushup(pin)  gpioicr1#pin=1
+
+define Gpioa.float(pin)  gpioacr1#pin=0
+define Gpiob.float(pin)  gpiobcr1#pin=0
+define Gpioc.float(pin)  gpioccr1#pin=0
+define Gpiod.float(pin)  gpiodcr1#pin=0
+define Gpioe.float(pin)  gpioecr1#pin=0
+define Gpiof.float(pin)  gpiofcr1#pin=0
+define Gpiog.float(pin)  gpiogcr1#pin=0
+define Gpioh.float(pin)  gpiohcr1#pin=0
+define Gpioi.float(pin)  gpioicr1#pin=0
+
+define Gpioa.fast(pin)  gpioacr2#pin=1
+define Gpiob.fast(pin)  gpiobcr2#pin=1
+define Gpioc.fast(pin)  gpioccr2#pin=1
+define Gpiod.fast(pin)  gpiodcr2#pin=1
+define Gpioe.fast(pin)  gpioecr2#pin=1
+define Gpiof.fast(pin)  gpiofcr2#pin=1
+define Gpiog.fast(pin)  gpiogcr2#pin=1
+define Gpioh.fast(pin)  gpiohcr2#pin=1
+define Gpioi.fast(pin)  gpioicr2#pin=1
+
+define Gpioa.slow(pin)  gpioacr2#pin=0
+define Gpiob.slow(pin)  gpiobcr2#pin=0
+define Gpioc.slow(pin)  gpioccr2#pin=0
+define Gpiod.slow(pin)  gpiodcr2#pin=0
+define Gpioe.slow(pin)  gpioecr2#pin=0
+define Gpiof.slow(pin)  gpiofcr2#pin=0
+define Gpiog.slow(pin)  gpiogcr2#pin=0
+define Gpioh.slow(pin)  gpiohcr2#pin=0
+define Gpioi.slow(pin)  gpioicr2#pin=0
+
+define Gpioa.interrupt(pin)  gpioacr2#pin=1
+define Gpiob.interrupt(pin)  gpiobcr2#pin=1
+define Gpioc.interrupt(pin)  gpioccr2#pin=1
+define Gpiod.interrupt(pin)  gpiodcr2#pin=1
+define Gpioe.interrupt(pin)  gpioecr2#pin=1
+define Gpiof.interrupt(pin)  gpiofcr2#pin=1
+define Gpiog.interrupt(pin)  gpiogcr2#pin=1
+define Gpioh.interrupt(pin)  gpiohcr2#pin=1
+define Gpioi.interrupt(pin)  gpioicr2#pin=1
+
+define Gpioa.disableinterrupt(pin)  gpioacr2#pin=0
+define Gpiob.disableinterrupt(pin)  gpiobcr2#pin=0
+define Gpioc.disableinterrupt(pin)  gpioccr2#pin=0
+define Gpiod.disableinterrupt(pin)  gpiodcr2#pin=0
+define Gpioe.disableinterrupt(pin)  gpioecr2#pin=0
+define Gpiof.disableinterrupt(pin)  gpiofcr2#pin=0
+define Gpiog.disableinterrupt(pin)  gpiogcr2#pin=0
+define Gpioh.disableinterrupt(pin)  gpiohcr2#pin=0
+define Gpioi.disableinterrupt(pin)  gpioicr2#pin=0
+
+define Gpioa.set(pin) gpioaodr#pin=1
+define Gpiob.set(pin) gpiobodr#pin=1
+define Gpioc.set(pin) gpiocodr#pin=1
+define Gpiod.set(pin) gpiododr#pin=1
+define Gpioe.set(pin) gpioeodr#pin=1
+define Gpiof.set(pin) gpiofodr#pin=1
+define Gpiog.set(pin) gpiogodr#pin=1
+define Gpioh.set(pin) gpiohodr#pin=1
+define Gpioi.set(pin) gpioiodr#pin=1
+
+define Gpioa.clr(pin) gpioaodr#pin=0
+define Gpiob.clr(pin) gpiobodr#pin=0
+define Gpioc.clr(pin) gpiocodr#pin=0
+define Gpiod.clr(pin) gpiododr#pin=0
+define Gpioe.clr(pin) gpioeodr#pin=0
+define Gpiof.clr(pin) gpiofodr#pin=0
+define Gpiog.clr(pin) gpiogodr#pin=0
+define Gpioh.clr(pin) gpiohodr#pin=0
+define Gpioi.clr(pin) gpioiodr#pin=0
+
+define Gpioa.get(pin) gpioaidr#pin
+define Gpiob.get(pin) gpiobidr#pin
+define Gpioc.get(pin) gpiocidr#pin
+define Gpiod.get(pin) gpiodidr#pin
+define Gpioe.get(pin) gpioeidr#pin
+define Gpiof.get(pin) gpiofidr#pin
+define Gpiog.get(pin) gpiogidr#pin
+define Gpioh.get(pin) gpiohidr#pin
+define Gpioi.get(pin) gpioiidr#pin
+
+define Gpioa.invert(pin) !gpioaodr#pin
+define Gpiob.invert(pin) !gpiobodr#pin
+define Gpioc.invert(pin) !gpiocodr#pin
+define Gpiod.invert(pin) !gpiododr#pin
+define Gpioe.invert(pin) !gpioeodr#pin
+define Gpiof.invert(pin) !gpiofodr#pin
+define Gpiog.invert(pin) !gpiogodr#pin
+define Gpioh.invert(pin) !gpiohodr#pin
+define Gpioi.invert(pin) !gpioiodr#pin
+
+define Gpioa.setvalue(v) gpioaodr=v
+define Gpiob.setvalue(v) gpiobodr=v
+define Gpioc.setvalue(v) gpiocodr=v
+define Gpiod.setvalue(v) gpiododr=v
+define Gpioe.setvalue(v) gpioeodr=v
+define Gpiof.setvalue(v) gpiofodr=v
+define Gpiog.setvalue(v) gpiogodr=v
+define Gpioh.setvalue(v) gpiohodr=v
+define Gpioi.setvalue(v) gpioiodr=v
+
+define Gpioa.getvalue portaidr
+define Gpiob.getvalue portbidr
+define Gpioc.getvalue portcidr
+define Gpiod.getvalue portdidr
+define Gpioe.getvalue porteidr
+define Gpiof.getvalue portfidr
+define Gpiog.getvalue portgidr
+define Gpioh.getvalue porthidr
+define Gpioi.getvalue portiidr
+
+endif

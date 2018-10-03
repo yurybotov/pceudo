@@ -1,0 +1,19 @@
+ifndef stackfile
+define stackfile
+
+// Процедуры примитивного байтового стэка
+//
+// Stack.up(prefix,len) - создание стэка глубиной len с префиксом переменных и функций prefix 
+//
+// call {prefix}init - инициализирует стэк
+// call {prefix}push - помещает содержимое регистра 'a' в стэк (если он полон начинает убивать ячейки сверху!)
+// call {prefix}pop - извлекает символ из стэка и помещает в регистр 'a' (если стэк пуст читает ячейки ниже)
+
+
+define Stack.up(prefix,stklen) go @0; @1: (m8)[stklen]; @2: (m16);\
+		prefixinit: push x; inline ldw x,#@1; inline ldw @2,x; pop x; ret;\
+		prefixpush: [@2]=a; @2++; ret;\
+		prefixpop:  @2--; a=[@2]; ret;\
+		@0: call prefixinit
+
+endif

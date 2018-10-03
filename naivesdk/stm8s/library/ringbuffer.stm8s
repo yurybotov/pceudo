@@ -1,0 +1,24 @@
+ifndef ringbufferfile
+define ringbufferfile
+
+// Процедуры кольцевого буфера
+//
+// Ringbuffer(prefix,len) - создание байтового кольцевого буфера длиной len 
+// 		            с префиксом переменных и функций prefix 
+//
+// call {prefix}init - инициализирует буфер
+// call {prefix}a2b - помещает содержимое регистра 'a' в кольцевой буфер (если он полон то просто отбрасывает значение)
+// call {prefix}b2a - извлекает символ из буфера и помещает в регистр 'a' (если буфер пуст возвращает 0)
+
+define Ringbuffer(prefix,buflen) go @11: @5:(m8)[buflen]; @6:(f16){@5};@7:(f16){@5+buflen};\
+			@8:(f8){buflen}; @9:(m16); @0:(m16); @10:(m8);\
+			prefixinit: push x; inline ldw x,#@5; inline ldw @9,x; inline ldw @0,x; @10=0; pop x; ret;\
+			prefixa2b: push a; a=@8; a-=@10; if a=0 @3; pop a;\
+			[@9]=a; @10++; @9++; push x; x=@9; x?@7;\
+			if z=0 @4; x=@6; @9=x; @4: pop x; ret; @3: pop a; ret;\
+			prefixb2a: a=@10; if a=0 @1; a=[@0]; @10--; @0++;\
+			push x;	x=@0; x?@7; if z=0 @2; x=@6; @0=x;\
+			@2: pop x; @1: ret;\
+			@11: call prefixinit
+	
+endif
