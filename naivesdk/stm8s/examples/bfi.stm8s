@@ -1,0 +1,56 @@
+include stm8s103x3
+
+define Fmaster	2000000
+
+include system
+include clock
+include gpio
+include tim1
+include uart1
+
+include bfinterpretator
+
+//
+// Brainfuck interpreter 'Hello world!'
+// serial uart1 9600
+//
+
+define led	3
+
+include interrupts
+
+ontim1u:
+	if tim1 sr1#0 = 0 otherint			// is this right interrupt?
+	tim1 sr1#0 = 0					// drop flag
+	Gpioa.invert(led)                               // invert led status
+otherint: iret
+
+clearmemory: x=255                   			// clear the data memory
+	cmloop: data[x]=0; x--; if z=0 cmloop; data[x]=0; ret
+
+// main block
+start:	
+	Stack.init(ramend)                       	// initialise stack pointer (it is assembler!!!)
+	Timer1.initms(Fmaster,2000)                      // init timer as 2000 ms
+	Uart1.init(Fmaster,9600)                       // init serial port
+	Uart.atD5D6      				// serial port legs
+	Gpioa.output(led)              			// init led port
+	Gpioa.pushup(led)
+	Uart1.puts(code)                           // write testline
+	Interrupt.enable
+
+loop:   waiti                                           // wait interrupt
+	call clearmemory                                // memory clear
+	call bf                                         // call bf interpreter
+	go near loop					// forever cycle
+
+	
+	bfinterpretator(uart1,code,data)		// library code insertion point
+
+// zero terminated line - bf code of Hello...
+code: (f8)[1] "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
+	(f8) {0}
+
+// bf data array
+data: (m8)[256]
+  

@@ -1,0 +1,46 @@
+
+//
+// bf - brainefuck interpreter
+//
+// serialname - uart1 or uart2 - for i/o using
+// code - bf code array (zero teminated)
+// data - bf data array
+//
+
+define bfinterpretator(serialname,code,data) @21: (r16);\
+bf:     x=0;\
+	y=0;\
+@0:     a=code[x]; if z=1 @1;\
+	a?'>'; if z=1 @2;\
+	a?'<'; if z=1 @3;\
+	a?'+'; if z=1 @4;\
+	a?'-'; if z=1 @5;\
+	a?'.'; if z=1 @6;\
+	a?','; if z=1 @7;\
+	a?'['; if z=1 @8;\
+	a?']'; if z=1 @9;\
+@1: 	ret;\
+@10:	x++; go near @0;\
+@2: 	y++; go near @10;\
+@3:	y--; go near @10;\
+@4: 	data[y]++; go near @10;\
+@5: 	data[y]--; go near @10;\
+@6: 	a=data[y]; @111: if serialnamesr#7=0 @111; serialnamedr=a; go near @10;\
+@7: 	a=serialnamedr; data[y]=a; go near @10;\
+@8: 	a=data[y]; if z=0 @10; @21 = 0; call @11; go near @10;\
+@9: 	a=data[y]; if z=1 @10; @21 = 0; call @12; go near @10;\
+@11:    a=code[x];\
+	a?'['; if z=1 @13;\
+	a?']'; if z=1 @14;\
+@15:	x++; go near @11;\
+@13: 	@21++; go near @15;\
+@14: 	@21--; if z=1 @1; go near @15;\
+@12:    a=code[x];\
+	a?']'; if z=1 @17;\
+	a?'['; if z=1 @18;\
+@19:	x--; go near @12;\
+@20:	x--; ret;\
+@17: 	@21++; go near @19;\
+@18: 	@21--; if z=1 @20; go near @19                     
+
+	
