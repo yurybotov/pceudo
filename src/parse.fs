@@ -14,6 +14,8 @@ let parseData (e : Elm) =
         e.t <- DATA; e.s <- ARRAY; e.sz <- (sizecvt size); e.v1 <- width; e.p <- (placecvt place)
     | Regexp "^\((\w)(\d+)\)(\".*\")" [place;size;value] -> 
         e.t <- DATA; e.s <- CONST; e.sz <- (sizecvt size); e.v1 <- value; e.p <- (placecvt place)
+    | Regexp @"^\((\w)(8)\)(\'.\'})" [place;size;value] -> 
+        e.t <- DATA; e.s <- CONST; e.sz <- (sizecvt size); e.v1 <- (value.Chars(0) |> int) |> string; e.p <- (placecvt place)
     | Regexp @"^\((\w)(\d+)\)({.*})" [place;size;value] -> 
         e.t <- DATA; e.s <- CONST; e.sz <- (sizecvt size); e.v1 <- value; e.p <- (placecvt place)
     | Regexp @"^\((\w)(\d+)\)" [place;size] -> 
@@ -39,9 +41,7 @@ let ParseParameter( e : Elm, p : string) : Addressing*string*string*string =
     elif target = "msp430" then msp430.ParseParameter(e,p)
     else failwith ("Error: unknown target '"+target+"'. Valid values stm8l, stm8s, avr, msp430")
 
-let noParameterOp (e : Elm) (o : Op) : Elm = 
-    e.t <- CODE; e.p <- Place.FLASH; e.n <- o 
-    e
+let noParameterOp (e : Elm) (o : Op) : Elm = e.t <- CODE; e.p <- Place.FLASH; e.n <- o; e
 
 let oneParameterOp (e : Elm) (s : string) (o : Op) : Elm = 
     let m,b,v,ev = ParseParameter(e,s)
@@ -65,7 +65,6 @@ let parseCode (e : Elm) =
             | Regexp @"^wait$" [] -> noParameterOp e WAIT
             | Regexp @"^nop" [] -> noParameterOp e NOP
             | Regexp @"^break" [] -> noParameterOp e BREAK
-
             | Regexp @"^ifc=1(.+)$" [variable] -> oneParameterOp e variable IFC1
             | Regexp @"^if=0(.+)$" [variable]
             | Regexp @"^ifz=1(.+)$" [variable] -> oneParameterOp e variable IFZ1
@@ -122,8 +121,7 @@ let parseCode (e : Elm) =
             | Regexp @"^go([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable GO
             | Regexp @"^callnear([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable CALLN
             | Regexp @"^callfar([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable CALLF
-            | Regexp @"^call([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable CALL
-          
+            | Regexp @"^call([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable CALL         
             | Regexp @"^(.+)\+\=c\+(.+)$" [left;right] ->  twoParameterOp e left right ADC
             | Regexp @"^(.+)\+\=(.+)$" [left;right] ->  twoParameterOp e left right ADD
             | Regexp @"^(.+)\-\=c\+(.+)$" [left;right] ->  twoParameterOp e left right SBC
@@ -138,7 +136,6 @@ let parseCode (e : Elm) =
             | Regexp @"^(.+)\=(.+)$" [left;right] ->  twoParameterOp e left right TO
             | Regexp @"^(.+)\&\?(.+)$" [left;right] -> twoParameterOp e left right ANDTEST
             | Regexp @"^(.+)\?(.+)$" [left;right] -> twoParameterOp e left right SUBTEST
-
             | _ ->  let a,b,c = e.source; 
                     failwith ("Error: Unknown assembler instruction "+e.elem+" in '"+c+"' at "+(b |> string)+" line of "+a)
     e
@@ -151,8 +148,4 @@ let parseAsmCommand (e : Elm) =
     else (parseCode e)
 
 
-let parse (elems : seq<Elm>) = 
-    [
-        for e in elems do
-            yield parseAsmCommand e
-    ]
+let parse (elems : seq<Elm>) = [ for e in elems do yield parseAsmCommand e ]

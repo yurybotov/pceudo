@@ -74,6 +74,8 @@ let addDef ( name : string, value : Definition) =
     | "eepromend" -> eepromend <- value.body |> int
     | "flashstart" -> flashstart <- value.body |> int
     | "flashend" -> flashend <- value.body |> int
+    | "hiflashstart" -> hiflashstart <- value.body |> int
+    | "hiflashend" -> hiflashend <- value.body |> int
     | _ -> ()
 
 let rec readLines (filePath:string) = 
@@ -96,19 +98,15 @@ let rec readLines (filePath:string) =
                 addDef(name.Trim(), { parameters = ""; body = value.Trim(); deftype = LINE }); ()
             | Regexp @"^\s*define\s+([A-Za-z][A-Za-z0-9\.]*)" [name] -> 
                 addDef(name.Trim(),{ parameters = ""; body = ""; deftype = SIMPLE }); ()
-            | Regexp @"^\s*undefine\s+([A-Za-z][A-Za-z0-9\.]*)" [name] -> 
-                if name <> null then 
-                    let _ = definitions.Remove (name.Trim());
-                    ()
+            | Regexp @"^\s*undefine\s+([A-Za-z][A-Za-z0-9\.]*)" [name] -> if name <> null then definitions.Remove(name.Trim()) |> ignore
             | Regexp @"^\s*ifdef\s+([A-Za-z][A-Za-z0-9\.]*)" [name] -> 
                 if name <> null && not (definitions.ContainsKey(name.Trim())) then searchPairedEndif sr filePath linenumber line; ()
             | Regexp @"^\s*ifndef\s+([A-Za-z][A-Za-z0-9\.]*)" [name] -> 
                 if name <> null && definitions.ContainsKey(name.Trim()) then searchPairedEndif sr filePath linenumber line; ()
             | Regexp @"^\s*endif\s*" [] -> ()
             | Regexp @"^\s*include\s+(.+)" [filename] -> yield! readLines (finder filename filePath linenumber line)
-            | _ -> 
-                if line.Trim() <> "" then
-                    yield (filePath,linenumber,convertString(line.Trim(),filePath,linenumber,line)) else ()
+            | _ -> if line.Trim() <> "" then yield (filePath,linenumber,convertString(line.Trim(),filePath,linenumber,line)) else ()
+            
             linenumber <- linenumber + 1
         printfn "done\t%i\tlines in\t%s" linenumber filePath
     ]

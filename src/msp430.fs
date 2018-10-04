@@ -177,11 +177,9 @@ let ParseParameter( e : Elm, p : string) : Addressing*string*string*string =
     | _ ->  let a,b,c = e.source; 
             failwith ("Error: Unknown addressing mode in '"+c+"' at "+(b |> string)+" line of "+a);
 
-let prefix : string =
-   ""
+let prefix : string = ""
 
-let postfix  =
-    "\n\tEND\n\nFile composed by PCEUDO"
+let postfix = "\n\tEND\n\nFile composed by PCEUDO"
 
 let mutable currentseg = ""
 
@@ -191,15 +189,11 @@ let lentype len = match len with | 1 -> ".b" | 2 -> ".w" | 4 -> ".l" | _ -> fail
 let countifneed cnt = if cnt < 2 then "" else cnt |> string
 let i2hex i = sprintf "%X" i
 
-let generateSimpleLabel seg name = 
-    if currentseg <> seg then currentseg <- seg; seg+"\tsegment\t'"+(segtype seg)+"'\n" else "" + name + ":\n"
-let generateAddressLabel seg name addr = 
-    currentseg <- seg; seg+"\tsegment byte at: "+(i2hex addr)+"\t'"+(segtype seg)+ "'\n" + name + ":\n"
+let generateSimpleLabel seg name = if currentseg <> seg then currentseg <- seg; seg+"\tsegment\t'"+(segtype seg)+"'\n" else "" + name + ":\n"
+let generateAddressLabel seg name addr = currentseg <- seg; seg+"\tsegment byte at: "+(i2hex addr)+"\t'"+(segtype seg)+ "'\n" + name + ":\n"
 
-let generateDataPlace seg width count = 
-    if currentseg <> seg then currentseg <- seg; seg+"\tsegment  '"+(segtype seg)+"'\n" else "" + "\tds"+(lentype width)+" "+(countifneed count)+"\n"
-let generateData seg width (data : string) = 
-    if currentseg <> seg then currentseg <- seg; seg+"\tsegment  '"+(segtype seg)+"'\n" else "" + "\tdc"+(lentype width)+"\t"+(data.Replace("0x","$").Replace("0X","$"))+"\n"
+let generateDataPlace seg width count = if currentseg <> seg then currentseg <- seg; seg+"\tsegment  '"+(segtype seg)+"'\n" else "" + "\tds"+(lentype width)+" "+(countifneed count)+"\n"
+let generateData seg width (data : string) = if currentseg <> seg then currentseg <- seg; seg+"\tsegment  '"+(segtype seg)+"'\n" else "" + "\tdc"+(lentype width)+"\t"+(data.Replace("0x","$").Replace("0X","$"))+"\n"
 
 let generateCode cmd = if currentseg <> "flash" then currentseg <- "flash"; "flash\tsegment\t'CODE'\n\t" else "\t" + cmd+"\n"
 

@@ -2,7 +2,7 @@
 
 type Type = XX | ERROR | LABEL | DATA | CODE | INLINE
 type Subtype = XX | ERROR | VAR | CONST | ARRAY | CONSTARRAY | SIMPLE | WITHADDRESS | NOPARAM | ONEPARAM | TWOPARAM 
-type Place = XX | ERROR | OTHER | FLASH | EEPROM | REGRAM | RAM | UNIFY
+type Place = XX | ERROR | OTHER | FLASH | HIFLASH | EEPROM | REGRAM | RAM | UNIFY
 
 type Op = XX |NOP | TRAP | RET | RETF | IRET | HALT | WAIT | WAITI | DIV16 | CALLN | CALL | CALLF | PUSH | SWAP | SHL | SHR | SHLA | 
             SHRA | SHL0 | SHR0 | SHRS | POP | SUBTEST | ANDTEST | TEST | GO | GON | GOF | IFC1 | IFC0 | IFZ1 | IFZ0 | IFH1 | IFH0 | IFV1 | 
@@ -66,5 +66,6 @@ let placecvt p =
     | "m" -> RAM
     | "f" -> FLASH
     | "e" -> EEPROM
+    | "x" -> HIFLASH
     | "u" -> UNIFY
     | _ -> failwith ("Error: bad data place modifyer: '"+p+"' use only r,m,f,e,u" ) 

@@ -12,3 +12,5 @@ let mutable eepromstart = -1
 let mutable eepromend = -1
 let mutable flashstart = -1
 let mutable flashend = -1
+let mutable hiflashstart = -1
+let mutable hiflashend = -1

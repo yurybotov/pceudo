@@ -196,11 +196,9 @@ let ParseParameter( e : Elm, p : string) : Addressing*string*string*string =
     | _ ->  let a,b,c = e.source; 
             failwith ("Error: unknown addressing mode "+e.elem+" in '"+c+"' at "+(b |> string)+" line of "+a)
 
-let prefix : string =
-    sprintf ".LIST\n.text\n.org 0x00\n"
+let prefix : string = sprintf ".LIST\n.text\n.org 0x00\n"
 
-let postfix  =
-    "\n\n;File composed by PCEUDO\n"
+let postfix  = "\n\n;File composed by PCEUDO\n"
 
 let mutable currentseg = ""
 
@@ -226,26 +224,19 @@ let generateSeg seg =
     else
         ""
 
-let generateSimpleLabel seg name = 
-    ((generateSeg seg) + name + ":\n")
+let generateSimpleLabel seg name = (generateSeg seg) + name + ":\n"
 
-let generateAddressLabel seg name addr = 
-    ((generateSeg seg) + ".ORG 0x" + (i2hex addr) + "\n" + name + ":\n")
+let generateAddressLabel seg name addr = (generateSeg seg) + ".ORG 0x" + (i2hex addr) + "\n" + name + ":\n"
 
-let generateDataPlace width count =
-    ("\tds"+(lentype width)+" "+(countifneed count)+"\n")
+let generateDataPlace width count = "\tds"+(lentype width)+" "+(countifneed count)+"\n"
 
-let generateData width (data : string) = 
-    ("\tdc"+(lentype width)+"\t"+(data.Replace("0x","$").Replace("0X","$"))+"\n")
+let generateData width (data : string) = "\tdc"+(lentype width)+"\t"+(data.Replace("0x","$").Replace("0X","$"))+"\n"
 
 let generateCode cmd = 
     if currentseg <> "flash" 
-    then 
-        currentseg <- "flash"; 
-        ((seg2cmd "flash") + "\n\t" + cmd + "\n") 
-
-    else 
-        "\t" + cmd + "\n"
+    then currentseg <- "flash"; 
+         ((seg2cmd "flash") + "\n\t" + cmd + "\n") 
+    else "\t" + cmd + "\n"
 
 let mutable haslabel = false
 let mutable labelname = ""

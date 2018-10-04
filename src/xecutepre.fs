@@ -5,6 +5,7 @@ open inputstrings
 open splitlines
 open parse
 
+// выбор таргет генератора кода
 let generate ( e : Elm list ) =
     if target = "stm8s" then stm8.printcode (stm8.generate e)
     elif target = "stm8l" then stm8.printcode (stm8.generate e)
@@ -12,6 +13,7 @@ let generate ( e : Elm list ) =
     elif target = "msp430" then msp430.printcode (msp430.generate e)
     else ""
 
+// запуск внешнего приложения (для запуска нативных инструментов)
 let exec exefile parameters =
     let p = new System.Diagnostics.Process()
     p.StartInfo.FileName <- exefile
@@ -27,13 +29,13 @@ let main argv =
     printfn "Naive pseudo assembler. Copyright 2018 Yury Botov."
     // разбор командной строки
     let name,ext = cmdlineparser (Array.toList argv)
-    // разбивка файлов на строкии наложение препроцессора
+
+    // разбивка файлов на строки и наложение препроцессора
     printfn "Preprocessing..."
     let lines = readLines (name+"."+ext)  
  
     // разбивка строк на примитивы
     let ops = splitLines lines
-    //for l in ops do printfn "%s" l.elem
 
     // парсинг псевдо-ассемблера
     printfn "Parsing..."
@@ -43,6 +45,7 @@ let main argv =
     printfn "Generation..."
     let out = generate parsed
     
+    // сохраняем asm файл
     System.IO.File.WriteAllText(name+".asm", out)
 
     printfn "Native assembler..."

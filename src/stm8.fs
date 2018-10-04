@@ -173,6 +173,7 @@ let ParseParameter( e : Elm, p : string) : Addressing*string*string*string =
     | Regexp @"^(a|xl|xh|yl|yh|cc)$" [r] -> (R8,r,"","")
     | Regexp @"^(x|y|sp)$" [r] -> (R16,r,"","")
     | Regexp @"^(0x[0-9a-fA-F]+|0X[0-9a-fA-F]+)$" [d] -> (IMMEDIATE,"",d,"")
+    | Regexp @"^(\'.\')$" [d] -> (IMMEDIATE,"",d,"")
     | Regexp @"^([0-9]+)$" [d] -> (IMMEDIATE,"",d,"")
     | Regexp @"^([A-Za-z0-9\._]+)\#([0-8])$" [a;b] -> (BITOPERATION,"",a,b)    
     | Regexp @"^\[([A-Za-z0-9\._]+)\]\[(x|y|sp)\]\]$" [e;r] -> (INDIRECT,r,e,"")
@@ -184,11 +185,10 @@ let ParseParameter( e : Elm, p : string) : Addressing*string*string*string =
             failwith ("Error: unknown addressing mode "+e.elem+" in '"+c+"' at "+(b |> string)+" line of "+a)
 
 let prefix : string =
-    sprintf "stm8\n\tsegment at %X-%X 'reg'\n\tsegment at %X-%X 'ram'\n\tsegment at %X-%X 'eeprom'\n\tsegment at %X-%X 'flash'\n\tsegment at %X-%X 'unify'\n\n"   
-        regstart regend ramstart ramend eepromstart eepromend flashstart flashend regstart flashend 
+    sprintf "stm8\n\tsegment at %X-%X 'reg'\n\tsegment at %X-%X 'ram'\n\tsegment at %X-%X 'eeprom'\n\tsegment at %X-%X 'flash'\n\tsegment at %X-%X 'hiflash'\n\tsegment at %X-%X 'unify'\n\n"   
+        regstart regend ramstart ramend eepromstart eepromend flashstart flashend hiflashstart hiflashend regstart flashend 
 
-let postfix  =
-    "\n\tEND\n\nFile composed by PCEUDO"
+let postfix = "\n\tEND\n\nFile composed by PCEUDO"
 
 let mutable currentseg = ""
 
