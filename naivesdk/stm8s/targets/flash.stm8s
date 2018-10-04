@@ -10,6 +10,20 @@ define Eeprom.protect flashiapsr#3=0
 
 define Flash.protect flashiapsr#1=0
 
+define Flash.block flashcr2=0x01; flashncr2=0xfe
+
+define Flash.fast flashcr2=0x10; flashncr2=0xef
+
+define Flash.erase flashcr2=0x20; flashncr2=0xdf
+
+define Flash.word flashcr2=0x40; flashncr2=0xbf
+
+define Flash.erase flashcr2=0x20; flashncr2=0xdf
+
+define Flash.byte
+
+
+
 // todo waiting macros
 
 endif
