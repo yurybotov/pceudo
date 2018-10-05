@@ -3,15 +3,11 @@ define uart2file
 
 include uart
 
-
-define Uart2.init(master,speed)	uart2cr1=0; uart2cr2=0; uart2cr3=0; uart2cr4=0; uart2cr5=0;\ 
-				uart2cr1#4=0; uart2cr1#2=0; uart2cr3#4=0; uart2cr3#5=0;\
-				inline mov uart2brr2,#{{master/speed} and $0f};\
+define Uart2.init(master,speed)	inline mov uart2brr2,#{{master/speed} and $0f};\
 				inline mov uart2brr1,#{{{master/speed} shr 4} and $ff};\
-				uart2cr2#3=0; uart2cr2#2=0; uart2cr3#2=1; uart2cr3#1=1; uart2cr3#0=1;\
-				uart2cr2#3=1; uart2cr2#2=1; uart2cr3#3=1
+				uart2cr3#1=1; uart2cr3#2=1; uart2cr2#2=1; uart2cr2#3=1
 
-define Uart2.getc 	a=uart1dr
+define Uart2.getc() 		@1: if uart2sr#5=0 @1; a=uart1dr
 
 define Uart2.putc()		@1: if uart2sr#7=0 @1; uart2dr=a
 

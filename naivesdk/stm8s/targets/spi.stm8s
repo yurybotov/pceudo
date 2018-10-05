@@ -3,4 +3,32 @@ define spifile
 
 define usingspihandler
 
+// csport - gpioa,gpiob...
+// cspin - digit 0-7
+// prescaler:
+// 0 - Fmaster/2
+// 1 - Fmaster/4
+// 2 - Fmaster/8
+// 3 - Fmaster/16
+// 4 - Fmaster/32
+// 5 - Fmaster/64
+// 6 - Fmaster/128
+// 7 - Fmaster/256
+//
+define Spi.init(csport,cspin,prescaler) spicr2#1=1; spicr2#0=1;\
+	inline mov spicr1,{{prescaler << 3} | 4 | 64};\
+	csportddr#cspin=1; csportcr1#cspin=1; csportodr#cspin=1;
+
+// a -> spi
+define Spi.write() 	spidr=a; @1: if spisr#1=0 @1
+
+// spi <- a
+define Spi.read() 	spidr=#255; @1: if spisr#1=0 @1; @2: if spisr#0=0 @2; a=spidr
+
+// sc
+define Spi.cs(csport,cspin)	csportodr#cspin=0;
+
+// sc
+define Spi.nocs(csport,cspin)	@1: if spisr#7=1 @1; csportodr#cspin=1;
+
 endif

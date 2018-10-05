@@ -3,15 +3,11 @@ define uart3file
 
 include uart
 
-
-define Uart3.init(master,speed)	uart3cr1=0; uart3cr2=0; uart3cr3=0; uart3cr4=0;\ 
-				uart3cr1#4=0; uart3cr1#2=0; uart3cr3#4=0; uart3cr3#5=0;\
-				inline mov uart3brr2,#{{master/speed} and $0f};\
+define Uart3.init(master,speed)	inline mov uart3brr2,#{{master/speed} and $0f};\
 				inline mov uart3brr1,#{{{master/speed} shr 4} and $ff};\
-				uart3cr2#3=0; uart3cr2#2=0; uart3cr3#2=1; uart3cr3#1=1; uart3cr3#0=1;\
-				uart3cr2#3=1; uart3cr2#2=1; uart3cr3#3=1
+				uart3cr3#1=1; uart3cr3#2=1; uart3cr2#2=1; uart3cr2#3=1
 
-define Uart3.getc 	a=uart3dr
+define Uart3.getc() 		@1: if uart3sr#5=0 @1; a=uart3dr
 
 define Uart3.putc()		@1: if uart3sr#7=0 @1; uart3dr=a
 
