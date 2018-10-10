@@ -1,0 +1,106 @@
+//
+// Stm8s application template
+// 
+
+// select (uncomment) chip family and comment other
+//include stm8s001
+//include stm8s003
+//include stm8s103x2
+//include stm8s103x3
+//include stm8s105x4
+//include stm8s105x6
+//include stm8s207x6
+include stm8s207x8
+//include stm8s207xb
+
+// inser here right master clock value, this value is for default: hsi clock with divider 8
+define Fmaster 2000000
+
+// using pereferial devices, unkomment if needed
+include system
+include clock
+//include trap
+//include tli
+//include awu
+//include clk
+//include exti0
+//include exti1
+//include exti2
+//include exti3
+//include exti4
+//include tim1
+//include tim2
+//include tim3
+//include tim4
+include uart1
+//include uart2
+//include uart3
+//include can
+//include spi
+include i2c
+//include adc
+//include flash
+include gpio
+
+// interrupt vectors
+include interrupts
+
+// do not write own code or data before this place
+// here place for you own definitions and includes
+
+// program start or reset
+delay: x = 65000; dloop: x--; if z=0 dloop; ret
+
+oni2c: iret
+
+start:
+	Stack.init(ramend)                       	// initialise stack pointer (it is assembler!!!)
+//	Clock.internal(3)				// hsi with divider 8
+	Uart1.init(Fmaster,9600)
+	Uart.atA4A5
+
+        I2c.init(2,0x0a,0);
+	
+	I2c.start()
+	I2c.addr(0xa2)
+	a=0x02; I2c.write();
+	a=0x00; I2c.write();
+	a=0x15; I2c.write();
+	a=0x12; I2c.write();
+	a=0x06; I2c.write();
+	a=0x07; I2c.write();
+	a=0x10; I2c.write();
+	a=0x18; I2c.write();
+	I2c.stop()
+
+loop: nop              
+	
+	I2c.start()
+	I2c.addr(0xa2)
+	a=0x02; I2c.write();
+	I2c.start()
+	I2c.addr(0xa3)
+//	I2c.read();
+//	I2c.read();
+//	I2c.read();
+//	I2c.read();
+//	I2c.read();
+//	I2c.read();
+//	I2c.read();
+//	I2c.read.last();
+	I2c.read.array(buf,8)
+
+	a=buf
+	a+=32
+	Uart1.putc()
+	call delay	
+
+                               
+	go loop						// forever cycle
+
+
+buf: 	(m8)[16]
+// your interrupt handlers
+
+// here will be code of connected with include standard libraries 
+//include libraries

@@ -24,15 +24,19 @@ define I2c.init(inputclock,prescaler,bits) i2cfreqr=inputclock; i2cccrl=prescale
 
 define I2c.start() i2ccr2#0=1; @1: if i2csr1#0=0 @1;
 
-define I2c.addr(address) a=address; i2cdr=a; @1: if i2csr1#7=0 @1; a=i2csr3; i2ccr2#2=1
+define I2c.addr(address) a=address; i2cdr=a; @1: if i2csr1#1=0 @1; a=i2csr3; i2ccr2#2=1
 
 // a->
 define I2c.write() i2cdr=a; @1: if i2csr1#7=0 @1;
 
-define I2c.read(buffer,length) push a; push x; x=0; a=length; @3: a?1; if z=1 @1; go @4;\
-	@1: a--; i2ccr2#2=1; @2: if i2csr1#6=1 @2; push a; a=i2cdr; buffer[x]=a; x++; pop a; go @3;\
-	@4: !i2ccr2#2; i2ccr2#1=1; @5: if i2csr3#0=1 @5; @6: if i2csr1#6=1 @6; a=i2cdr; buffer[x]=a;
-	pop x; pop a;
+
+define I2c.read.array(buffer,length) push a; push x; x=0; a=length;\
+	@3: a?1; if z=1 @1; i2ccr2#2=1; push a; @2: if i2csr1#6=0 @2; a=i2cdr; buffer[x]=a; x++; pop a; a--; go @3;\ 
+	@1: i2ccr2#2=0; i2ccr2#1=1; @4: if i2csr3#0=1 @4; @5: if i2csr1#6=0 @5; a=i2cdr; buffer[x]=a; pop x; pop a;  
+
+define I2c.read()	i2ccr2#2=1; @1: if i2csr1#6=0 @1; a=i2cdr
+
+define I2c.read.last()	i2ccr2#2=0; i2ccr2#1=1; @1: if i2csr3#0=1 @1; @2: if i2csr1#6=0 @2; a=i2cdr
 
 define I2c.stop()  i2ccr2#1=1; @1: if i2csr3#0=1 @1;
 
