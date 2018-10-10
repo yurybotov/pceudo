@@ -15,20 +15,24 @@ define usingspihandler
 // 6 - Fmaster/128
 // 7 - Fmaster/256
 //
-define Spi.init(csport,cspin,prescaler) spicr2#1=1; spicr2#0=1;\
-	inline mov spicr1,{{prescaler << 3} | 4 | 64};\
-	csportddr#cspin=1; csportcr1#cspin=1; csportodr#cspin=1;
+define Spi.init(csport,cspin,prescaler) spicr2#7=0; spicr2#1=1; spicr2#0=1;\
+	inline mov spicr1,{{prescaler shl 3} or 64}; spicr1#7=0;\
+	csportddr#cspin=1; csportcr1#cspin=1; csportodr#cspin=1; go near @1;\
+	spiwrite: nop; @2: if spisr#1=0 @2; spidr=a; ret;\
+	spiread: nop; @7: if spisr#1=0 @7; spidr=255; @3: if spisr#1=0 @3; @4: if spisr#0=0 @4; a=spidr; ret;\
+	spienablecs: csportodr#cspin=0; ret;\
+	spidisablecs: nop; @5: if spisr#7=1 @5; csportodr#cspin=1; ret; @1: nop;
 
 // a -> spi
-define Spi.write() 	spidr=a; @1: if spisr#1=0 @1
+define Spi.write() 	call spiwrite
 
-// spi <- a
-define Spi.read() 	spidr=#255; @1: if spisr#1=0 @1; @2: if spisr#0=0 @2; a=spidr
-
-// sc
-define Spi.cs(csport,cspin)	csportodr#cspin=0;
+// spi -> a
+define Spi.read() 	call spiread
 
 // sc
-define Spi.nocs(csport,cspin)	@1: if spisr#7=1 @1; csportodr#cspin=1;
+define Spi.cs()		call spienablecs
+
+// sc
+define Spi.nocs()	call spidisablecs
 
 endif

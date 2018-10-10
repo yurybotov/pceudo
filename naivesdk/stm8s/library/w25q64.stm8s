@@ -1,0 +1,39 @@
+
+define W25q64.erase.chip        push a; a = 0xc7; call spienablecs; call spiwrite; call spidisablecs; pop a;
+
+define W25q64.erase.sector(addrmost,addrmid,addrless)	push a; a=0x20; call spienablecs; call spiwrite;\
+				a=addrmost; call spiwrite; a=addrmid; call spiwrite; a=addrless; call spiwrite;\
+				call spidisablecs; pop a;
+
+define W25q64.erase.block32(addrmost,addrmid,addrless)	push a; a=0x52; call spienablecs; call spiwrite;\
+				a=addrmost; call spiwrite; a=addrmid; call spiwrite; a=addrless; call spiwrite;\
+				call spidisablecs; pop a;
+
+define W25q64.erase.block64(addrmost,addrmid,addrless)	push a; a=0xd8; call spienablecs; call spiwrite;\
+				a=addrmost; call spiwrite; a=addrmid; call spiwrite; a=addrless; call spiwrite;\
+				call spidisablecs; pop a;
+
+define W25q64.write.enable 	push a; a=0x06; call spienablecs; call spiwrite; call spidisablecs; pop a;
+
+define W25q64.write.disable     push a; a=0x04; call spienablecs; call spiwrite; call spidisablecs; pop a;
+
+
+// buffer - 2 bytes
+define W25q64.read.id(buffer)	push a; a=0x90; call spienablecs; call spiwrite; a=0; call spiwrite; call spiwrite; call spiwrite;\
+				call spiread; buffer=a; call spiread; inline ld {buffer+1},a; call spidisablecs; pop a;
+
+define W25q64.read.sequence(addrmost,addrmid,addrless,buffer,length) push a; push x; x=0; a=0x03; call spienablecs; call spiwrite;\
+				a=addrmost; call spiwrite; a=addrmid; call spiwrite; a=addrless; call spiwrite;\
+				@1: call spiread; buffer[x]=a; x++; x?length; if z=0 @1; call spidisablecs; pop x; pop a;
+
+define W25q64.fastread.sequence(addrmost,addrmid,addrless,buffer,length) push a; push x; x=0; a=0x0b; call spienablecs; call spiwrite;\
+				a=addrmost; call spiwrite; a=addrmid; call spiwrite; a=addrless; call spiwrite; a=0; call spiwrite; \
+				@1: call spiread; buffer[x]=a; x++; x?length; if z=0 @1; call spidisablecs; pop x; pop a;
+
+define W25q64.write.page(addrmost,addrmid,addrless,buffer) push a; push x; x=0; a=0x02; call spienablecs; call spiwrite;\
+				a=addrmost; call spiwrite; a=addrmid; call spiwrite; a=addrless; call spiwrite;\
+				@1: a=buffer[x]; call spiwrite; x++; x?256; if z=0 @1; call spidisablecs; pop x; pop a; 
+
+define W25q64.wait.busy()  	push a; a=0x05; call spienablecs; call spiwrite; @1: call spiread; if a<>0 @1; call spidisablecs; pop a;
+
+define W25q64.wait.write()	push a; a=0x05; call spienablecs; call spiwrite; @1: call spiread; a?2; if z=0 @1; call spidisablecs; pop a;

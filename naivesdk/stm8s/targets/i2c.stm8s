@@ -20,7 +20,7 @@ define usingi2chandler
 
 
 define I2c.init(inputclock,prescaler,bits) i2cfreqr=inputclock; i2cccrl=prescaler;\
-					i2coarh#7=bits; i2ccr1#0=1; 
+					i2coarh#7=bits; i2ccr1#0=1; gpiobddr#4=1; gpiobddr#5=1;
 
 define I2c.start() i2ccr2#0=1; @1: if i2csr1#0=0 @1;
 

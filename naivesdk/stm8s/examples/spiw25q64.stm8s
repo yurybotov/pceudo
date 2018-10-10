@@ -1,0 +1,53 @@
+include stm8s207x8
+
+define Fmaster 2000000
+
+include system
+include clock
+include uart1
+include spi
+include gpio
+
+// interrupt vectors
+include interrupts
+
+onspi: iret
+
+
+delay: x = 30000; dloop: x--; if z=0 dloop; ret
+
+message: (f8) "Hello"
+	(f8) {32}
+	(f8) "w25q64"
+	(f8) {32}
+	(f8) "from"
+	(f8) {32} 
+	(f8) "stm8s207r8!"
+	(f8) {0}
+
+loades: (m8)
+loades2: (m8)[35]
+
+include w25q64
+
+start:
+	Stack.init(ramend)                       	// initialise stack pointer (it is assembler!!!)
+	Spi.init(gpioc,2,5)
+	Uart1.init(Fmaster,9600)
+	Uart.atA4A5
+
+loop: 	call delay
+
+	W25q64.write.enable
+	W25q64.wait.write()
+        W25q64.erase.sector(0,1,0)
+	W25q64.wait.busy()
+	W25q64.write.enable
+	W25q64.wait.write()
+	W25q64.write.page(0,1,0,message)
+	W25q64.wait.busy()
+	W25q64.read.sequence(0,1,0,loades,32)
+
+	Uart1.puts(loades2)
+                               
+	go loop						// forever cycle
