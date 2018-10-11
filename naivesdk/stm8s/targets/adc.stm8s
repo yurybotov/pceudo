@@ -6,7 +6,7 @@ define usingadchandler
 define Adc.simple.init(pre,port) inline mov adctdrl,#{1 shl port}; push a; a=pre; swap a;\
 				adccr1=a; a=adccsr; a&=0xF0; a|=port; adccsr=a; pop a; adccr2#3=1; adccr1#0=1
 
-define Adc.simple.read(port)  push a; a=adccsr; a&=0xF0; a|=port; adccsr=a; adccr1#0=1; adccr1#0=1; @1: if adccsr#6=1 @1;\
+define Adc.simple.read(port)  push a; a=adccsr; a&=0xF0; a|=port; adccsr=a; adccr1#0=1; adccr1#0=1; adccsr#6=0?->;\
 			      a=adcdrl; xl=a; a=adcdrh; xh=a; pop a;
 
 endif

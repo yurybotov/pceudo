@@ -18,10 +18,10 @@ define usingspihandler
 define Spi.init(csport,cspin,prescaler) spicr2#7=0; spicr2#1=1; spicr2#0=1;\
 	inline mov spicr1,{{prescaler shl 3} or 64}; spicr1#7=0;\
 	csportddr#cspin=1; csportcr1#cspin=1; csportodr#cspin=1; go near @1;\
-	spiwrite: nop; @2: if spisr#1=0 @2; spidr=a; ret;\
-	spiread: nop; @7: if spisr#1=0 @7; spidr=255; @3: if spisr#1=0 @3; @4: if spisr#0=0 @4; a=spidr; ret;\
+	spiwrite: spisr#1=1?->; spidr=a; ret;\
+	spiread:spisr#1=1?->; spidr=255; spisr#1=1?->; spisr#0=1?->; a=spidr; ret;\
 	spienablecs: csportodr#cspin=0; ret;\
-	spidisablecs: nop; @5: if spisr#7=1 @5; csportodr#cspin=1; ret; @1: nop;
+	spidisablecs: spisr#7=0?->; csportodr#cspin=1; ret; @1: nop;
 
 // a -> spi
 define Spi.write() 	call spiwrite

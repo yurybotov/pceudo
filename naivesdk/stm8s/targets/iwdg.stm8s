@@ -1,0 +1,18 @@
+ifndef iwdgfile
+define iwdgfile
+
+// prescaler
+// 0 - 64kHz/4
+// 1 - 64kHz/8
+// 2 - 64kHz/16
+// 3 - 64kHz/32
+// 4 - 64kHz/64
+// 5 - 64kHz/128
+// 6 - 64kHz/256
+// counter 0-255
+// (6,255) -> 1.02 сек
+define Iwdg.init(prescaler,counter) iwdgkr=0xcc; iwdgkr=0x55; iwdgpr=prescaler; iwdgrlr=counter; iwdgkr=0xaa
+
+define Iwdg.feed	iwdgkr=0xaa
+
+endif

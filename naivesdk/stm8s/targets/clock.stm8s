@@ -1,45 +1,51 @@
 ifndef clockfile
 define clockfile
 
-// set external quarz clock
 
-// divider is summa of 2 part:
-// 0 - fmaster = hsi
-// 8 - fmaster = hsi/2
-// 16 - fmaster = hsi/4
-// 24 - fmaster = hsi/8
-// +
-// 0 - fcpu = fmaster
-// 1 - fcpu = fmaster/2
-// 2 - fcpu = fmaster/4
-// 3 - fcpu = fmaster/8
-// 4 - fcpu = fmaster/16
-// 5 - fcpu = fmaster/32
-// 6 - fcpu = fmaster/64
-// 7 - fcpu = fmaster/128
-define Clock.external(divider) 	clk eckr#0=1;\
-				clk swcr#1=1;\
-			@1: 	if clk eckr#1=0 @1;\
-				clk ckdivr=divider;\
-				clk swr=0xb4;\
-			@2: 	if clk swcr#3=0 @2\
+define Clock.hse.on() 	clkeckr#0=1; clkeckr#1=1?->;
+define Clock.hse.off()  clkeckr#0=0 
+define Clock.hsi.on()   clkickr#0=1; clkickr#1=1?->;
+define Clock.hsi.off()  clkickr#0=0;
+define Clock.lsi.on()   clkickr#3=1; clkickr#4=0?->;
+define Clock.lsi.off()  clkickr#3=0;
 
-// set internal clock
+define Clock.hse.use()	clkswr=0xb4; clkswcr#3=1?->; clkswcr#1=1; clkswcr#0=0?->;
+define Clock.hsi.use()	clkswr=0xe1; clkswcr#3=1?->; clkswcr#1=1; clkswcr#0=0?->;
+define Clock.lsi.use()	clkswr=0xd2; clkswcr#3=1?->; clkswcr#1=1; clkswcr#0=0?->;
 
-// divider is:
-// 0 - fcpu = fmaster
-// 1 - fcpu = fmaster/2
-// 2 - fcpu = fmaster/4
-// 3 - fcpu = fmaster/8
-// 4 - fcpu = fmaster/16
-// 5 - fcpu = fmaster/32
-// 6 - fcpu = fmaster/64
-// 7 - fcpu = fmaster/128
-define Clock.internal(divider) 	clk ickr=0; clk ickr#0=1; clk eckr=0;\
-			@1: 	if clk ickr#1=0 @1;\
-				clk ckdivr=divider; clk ccor=0; clk hsitrimr=0;\
-				clk swimccr=0; clk swr=0xe1; clk swcr=0; clk swcr#1=1;\
-			@2: 	if clk swcr#0=1 @2;
+// hsidivider - hsi divider
+// 0 - hsi
+// 1 - hsi/2
+// 2 - hsi/4
+// 3 - hsi/8
+// cpudivider - master/cpu divider
+// 0 - cpu = master
+// 1 - cpu = master/2
+// 2 - cpu = master/4
+// 3 - cpu = master/8
+// 4 - cpu = master/16
+// 5 - cpu = master/32
+// 6 - cpu = master/64
+// 7 - cpu = master/128
+define Clock.dividers(hsidivider,cpudivider) inline mov clkckdivr,#{{{hsidivider shl 3} and 3} or {cpudivider and 7}};
 
+// source
+// 0 - Fhsidiv
+// 1 - Flsi
+// 2 - Fhse
+// 3 - reserved
+// 4 - Fcpu
+// 5 - Fcpu/2
+// 6 - Fcpu/4
+// 7 - Fcpu/8
+// 8 - Fcpu/16
+// 9 - Fcpu/32
+// 10- Fcpu/64
+// 11- Fhsi
+// 12- Fmaster
+// 13- Fcpu
+// 14- Fcpu
+// 15- Fcpu
+define Clock.outPC4(source)	gpiocddr#4=1; gpioccr1#4=1; gpioccr2#4=1; inline mov clkccor,#{source shl 1}; clkccor#0=1
 
 endif

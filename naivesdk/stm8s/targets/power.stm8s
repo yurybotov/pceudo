@@ -24,5 +24,16 @@ define Power.on.awu     clkpckenr2#2=1
 define Power.off.awu    clkpckenr2#2=0
 define Power.on.adc     clkpckenr2#3=1
 define Power.off.adc    clkpckenr2#3=0
+define Power.on.can     clkpckenr2#7=1
+define Power.off.can    clkpckenr2#7=0
+
+
+// for uarts 
+// uart1 - any uart with low number
+// uart2 - any uart with hi number (if present)
+// for timers
+// tim2 may be tim5
+// tim4 may be tim6
+
 
 endif

@@ -34,7 +34,6 @@ ontim2udone:
 // main block
 start:
     	Stack.init(ramend)		// initialise stack pointer (it is assembler!!!)	
-//	Clock.internal(3)  		// internal HSI
     	Gpiod.output(led)		// for output
 	Gpiod.pushup(led)
 	Beep.init

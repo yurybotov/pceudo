@@ -26,7 +26,7 @@ bf:     x=0;\
 @4: 	data[y]++; go near @10;\
 @5: 	data[y]--; go near @10;\
 @6: 	a=data[y]; @111: if serialnamesr#7=0 @111; serialnamedr=a; go near @10;\
-@7: 	a=serialnamedr; data[y]=a; go near @10;\
+@7:	if serialnamesr#5=0 @7; a=serialnamedr; data[y]=a; go near @10;\
 @8: 	a=data[y]; if z=0 @10; @21 = 0; call @11; go near @10;\
 @9: 	a=data[y]; if z=1 @10; @21 = 0; call @12; go near @10;\
 @11:    a=code[x];\

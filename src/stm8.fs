@@ -130,7 +130,7 @@ let cmds : list<Elm>= [
     new Elm(TO,         R1,         "i",    "-1",   "-1",   -1,   IMMEDIATE,"-1",   "0",    "-1",   1,    "rim",            noparam);
     new Elm(TO,         R1,         "i",    "-1",   "-1",   -1,   IMMEDIATE,"-1",   "1",    "-1",   1,    "sim",            noparam);
     new Elm(TO,         R1,         "v",    "-1",   "-1",   -1,   IMMEDIATE,"-1",   "0",    "-1",   1,    "rvf",            noparam);
-    new Elm(TO,         R16,        "-1",   "-1",   "-1",   -1,   IMMEDIATE,"-1",   "0",    "-1",   1,    "clrw %s",         oneparam);
+    new Elm(TO,         R16,        "-1",   "-1",   "-1",   -1,   IMMEDIATE,"-1",   "0",    "-1",   1,    "clrw %s",        oneparam);
     new Elm(TO,         XX,         "-1",   "-1",   "-1",   -1,   IMMEDIATE,"-1",   "0",    "-1",   1,    "clr %s",         oneparam);
     new Elm(TO,         DIRECT,     "-1",   "-1",   "-1",   -1,   IMMEDIATE,"-1",   "-1",   "-1",   1,    "mov %s,%s",      twoparam);
     new Elm(TO,         DIRECT,     "-1",   "-1",   "-1",   -1,   DIRECT,   "-1",   "-1",   "-1",   1,    "mov %s,%s",      twoparam);
@@ -143,7 +143,9 @@ let cmds : list<Elm>= [
     new Elm(ANDTEST,    XX,         "-1",   "-1",   "-1",   -1,   XX,       "-1",   "-1",   "-1",   1,    "bcp %s,%s",      twoparam);
     new Elm(SUBTEST,    R16,        "-1",   "-1",   "-1",   -1,   XX,       "-1",   "-1",   "-1",   1,    "cpw %s,%s",      twoparam);
     new Elm(SUBTEST,    XX,         "-1",   "-1",   "-1",   -1,   XX,       "-1",   "-1",   "-1",   1,    "cp %s,%s",       twoparam);
-    new Elm(INLINE,     XX,         "-1",   "-1",   "-1",   -1,   XX,       "-1",    "-1",   "-1",   1,   "",               inlineop);
+    new Elm(NOTYET,     BITOPERATION,"-1",  "-1",   "-1",   -1,   IMMEDIATE,"-1",   "0",    "-1",   1,    "btjt %s, *",     oneparam);
+    new Elm(NOTYET,     BITOPERATION,"-1",  "-1",   "-1",   -1,   IMMEDIATE,"-1",   "1",    "-1",   1,    "btjf %s, *",     oneparam);
+    new Elm(INLINE,     XX,         "-1",   "-1",   "-1",   -1,   XX,       "-1",   "-1",   "-1",   1,     "",              inlineop);
     
 ]
 

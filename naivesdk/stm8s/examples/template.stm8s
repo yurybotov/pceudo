@@ -51,7 +51,6 @@ include interrupts
 // program start or reset
 start:
 	Stack.init(ramend)                       	// initialise stack pointer (it is assembler!!!)
-	Clock.internal(3)				// hsi with divider 8
 
 	// here other init code
 

@@ -3,6 +3,7 @@
 open elem
 open library
 open config
+open System.Linq.Expressions
 
 let parseData (e : Elm) =
     match e.elem with
@@ -12,8 +13,8 @@ let parseData (e : Elm) =
         e.t <- DATA; e.s <- CONSTARRAY; e.sz <- (sizecvt size); e.p <- (placecvt place); e.v1 <- values
     | Regexp @"^\((\w)(\d+)\)\s*\[(\d+)\]" [place;size;width] -> 
         e.t <- DATA; e.s <- ARRAY; e.sz <- (sizecvt size); e.v1 <- width; e.p <- (placecvt place)
-    | Regexp "^\((\w)(\d+)\)(\".*\")" [place;size;value] -> 
-        e.t <- DATA; e.s <- CONST; e.sz <- (sizecvt size); e.v1 <- value; e.p <- (placecvt place)
+    | Regexp "^\((\w)(8)\)(\".*\")" [place;size;value] -> 
+        e.t <- DATA; e.s <- CONSTARRAY; e.sz <- (sizecvt size); e.v1 <- value; e.p <- (placecvt place)
     | Regexp @"^\((\w)(8)\)(\'.\'})" [place;size;value] -> 
         e.t <- DATA; e.s <- CONST; e.sz <- (sizecvt size); e.v1 <- (value.Chars(0) |> int) |> string; e.p <- (placecvt place)
     | Regexp @"^\((\w)(\d+)\)({.*})" [place;size;value] -> 
@@ -121,7 +122,8 @@ let parseCode (e : Elm) =
             | Regexp @"^go([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable GO
             | Regexp @"^callnear([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable CALLN
             | Regexp @"^callfar([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable CALLF
-            | Regexp @"^call([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable CALL         
+            | Regexp @"^call([A-Za-z0-9\._]+)$" [variable] -> oneParameterOp e variable CALL   
+            | Regexp @"^(.+)\=([0-1])\?\-\>$" [left;right] -> twoParameterOp e left right NOTYET
             | Regexp @"^(.+)\+\=c\+(.+)$" [left;right] ->  twoParameterOp e left right ADC
             | Regexp @"^(.+)\+\=(.+)$" [left;right] ->  twoParameterOp e left right ADD
             | Regexp @"^(.+)\-\=c\+(.+)$" [left;right] ->  twoParameterOp e left right SBC
