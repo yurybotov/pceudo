@@ -12,7 +12,6 @@ define flashend 0x9fff
 define hiflashstart -1
 define hiflashend -1
 
-
 define farptr   0
 
 define canusegpio

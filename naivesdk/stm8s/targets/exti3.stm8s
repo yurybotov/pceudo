@@ -1,6 +1,0 @@
-ifndef exti3file
-define exti3file
-
-define usingexti3handler
-
-endif

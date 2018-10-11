@@ -1,0 +1,14 @@
+ifndef extiefile
+define extiefile
+
+define usingextiehandler
+
+define Extie.low		itcexticr2#0=0; itcexticr2#1=0
+
+define Extie.edge.down          itcexticr2#0=0; itcexticr2#1=1
+
+define Extie.edge.up            itcexticr2#0=1; itcexticr2#1=0
+
+define Extie.edge.both          itcexticr2#0=1; itcexticr2#1=1
+
+endif

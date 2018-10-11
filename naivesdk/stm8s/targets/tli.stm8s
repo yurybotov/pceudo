@@ -3,4 +3,8 @@ define tlifile
 
 define usingtlihandler
 
+define Tli.edge.up      itcexticr2#2=1
+
+define Tli.edge.down	itcexticr2#2=0
+
 endif

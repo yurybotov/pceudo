@@ -1,0 +1,14 @@
+ifndef exticfile
+define exticfile
+
+define usingextichandler
+
+define Extic.low		itcexticr1#4=0; itcexticr1#5=0
+
+define Extic.edge.down          itcexticr1#4=0; itcexticr1#5=1
+
+define Extic.edge.up            itcexticr1#4=1; itcexticr1#5=0
+
+define Extic.edge.both          itcexticr1#4=1; itcexticr1#5=1
+
+endif

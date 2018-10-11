@@ -1,0 +1,14 @@
+ifndef extibfile
+define extibfile
+
+define usingextibhandler
+
+define Extib.low		itcexticr1#2=0; itcexticr1#3=0
+
+define Extib.edge.down          itcexticr1#2=0; itcexticr1#3=1
+
+define Extib.edge.up            itcexticr1#2=1; itcexticr1#3=0
+
+define Extib.edge.both          itcexticr1#2=1; itcexticr1#3=1
+
+endif

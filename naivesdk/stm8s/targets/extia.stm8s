@@ -1,0 +1,14 @@
+ifndef extiafile
+define extiafile
+
+define usingextiahandler
+
+define Extia.low		itcexticr1#0=0; itcexticr1#1=0
+
+define Extia.edge.down          itcexticr1#0=0; itcexticr1#1=1
+
+define Extia.edge.up            itcexticr1#0=1; itcexticr1#1=0
+
+define Extia.edge.both          itcexticr1#0=1; itcexticr1#1=1
+
+endif

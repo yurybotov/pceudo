@@ -32,39 +32,39 @@ ifndef usingclkhandler
 interrupt clk:         (f32) {0x82000000+dumb}
 endif
 
-ifdef usingexti0handler
-interrupt exti0:       (f32) {0x82000000+onexti0}
+ifdef usingextiahandler
+interrupt extia:       (f32) {0x82000000+onextia}
 endif
-ifndef usingexti0handler
-interrupt exti0:       (f32) {0x82000000+dumb}
-endif
-
-ifdef usingexti1handler
-interrupt exti1:       (f32) {0x82000000+onexti1}
-endif
-ifndef usingexti1handler
-interrupt exti1:       (f32) {0x82000000+dumb}
+ifndef usingextiahandler
+interrupt extia:       (f32) {0x82000000+dumb}
 endif
 
-ifdef usingexti2handler
-interrupt exti2:       (f32) {0x82000000+onexti2}
+ifdef usingextibhandler
+interrupt extib:       (f32) {0x82000000+onextib}
 endif
-ifndef usingexti2handler
-interrupt exti2:       (f32) {0x82000000+dumb}
-endif
-
-ifdef usingexti3handler
-interrupt exti3:       (f32) {0x82000000+onexti3}
-endif
-ifndef usingexti3handler
-interrupt exti3:       (f32) {0x82000000+dumb}
+ifndef usingextibhandler
+interrupt extib:       (f32) {0x82000000+dumb}
 endif
 
-ifdef usingexti4handler
-interrupt exti4:       (f32) {0x82000000+onexti4}
+ifdef usingextichandler
+interrupt extic:       (f32) {0x82000000+onextic}
 endif
-ifndef usingexti4handler
-interrupt exti4:       (f32) {0x82000000+dumb}
+ifndef usingextichandler
+interrupt extic:       (f32) {0x82000000+dumb}
+endif
+
+ifdef usingextidhandler
+interrupt extid:       (f32) {0x82000000+onextid}
+endif
+ifndef usingextidhandler
+interrupt extid:       (f32) {0x82000000+dumb}
+endif
+
+ifdef usingextiehandler
+interrupt extie:       (f32) {0x82000000+onextie}
+endif
+ifndef usingextiehandler
+interrupt extie:       (f32) {0x82000000+dumb}
 endif
 
 ifdef usingcanrxhandler

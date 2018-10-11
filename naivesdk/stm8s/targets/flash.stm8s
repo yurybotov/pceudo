@@ -2,28 +2,35 @@ ifndef flashfile
 define flashfile
 
 
-define Eeprom.unprotect	flashdukr=0xae; flashdukr=0x56
+define Eeprom.unprotect()	flashdukr=0xae; flashdukr=0x56; @1: if flashiaspr#3=1 @1;
 
-define Flash.unprotect	flashpukr=0x56; flashpukr=0xae
+define Flash.unprotect()	flashpukr=0x56; flashpukr=0xae; @1: if flashiaspr#1=1 @1;
 
-define Eeprom.protect flashiapsr#3=0
+define Eeprom.protect()		flashiapsr#3=0
 
-define Flash.protect flashiapsr#1=0
-
-define Flash.block flashcr2=0x01; flashncr2=0xfe
-
-define Flash.fast flashcr2=0x10; flashncr2=0xef
-
-define Flash.erase flashcr2=0x20; flashncr2=0xdf
-
-define Flash.word flashcr2=0x40; flashncr2=0xbf
-
-define Flash.erase flashcr2=0x20; flashncr2=0xdf
-
-define Flash.byte
+define Flash.protect()		flashiapsr#1=0
 
 
+define Eeprom.block()		flashcr2=0x01; flashncr2=0xfe
 
-// todo waiting macros
+define Eeprom.fast()		flashcr2=0x10; flashncr2=0xef
+
+define Eeprom.erase()		flashcr2=0x20; flashncr2=0xdf
+
+define Eeprom.word()		flashcr2=0x40; flashncr2=0xbf
+
+
+define Flash.block()		flashcr2=0x01; flashncr2=0xfe
+
+define Flash.fast()		flashcr2=0x10; flashncr2=0xef
+
+define Flash.erase()		flashcr2=0x20; flashncr2=0xdf
+
+define Flash.word()		flashcr2=0x40; flashncr2=0xbf
+
+define Flash.done()	 	@1: if flashiaspr#2=0 @1;
+
+define Eeprom.done()	 	@1: if flashiaspr#2=0 @1;
+
 
 endif

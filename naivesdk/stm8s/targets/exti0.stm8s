@@ -1,6 +1,0 @@
-ifndef exti0file
-define exti0file
-
-define usingexti0handler
-
-endif

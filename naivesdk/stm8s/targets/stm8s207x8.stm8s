@@ -27,7 +27,7 @@ define canusetim4
 define canusespi
 define canusei2c
 
-define Serial Uart3
+define Serial Uart1
 
 include stm8s.stm8s
 
